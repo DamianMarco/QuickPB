@@ -14,7 +14,7 @@
 		
 			
 	
- <div class="menu-header2"><ul id="nav" class="menu sf-js-enabled sf-shadow"><li id="menu-item-129" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-129"><a href="http://www.quickpobox.com/nosotros/" class="sf-with-ul">Nosotros<span class="sf-sub-indicator"> »</span></a>
+ <div class="menu-header2"><ul id="nav" class="menu sf-js-enabled sf-shadow"><li id="menu-item-129" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-129"><a href="http://www.quickpobox.com/nosotros/" class="sf-with-ul">Nosotros</a>
 <ul class="sub-menu" style="display: none; visibility: hidden;">
 	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a href="http://www.quickpobox.com/ubicacion/">Ubicación</a></li>
 	<li id="menu-item-126" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126"><a href="http://www.quickpobox.com/contacto/">Contacto</a></li>
