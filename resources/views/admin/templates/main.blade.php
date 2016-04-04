@@ -13,6 +13,7 @@
 	<title>@yield('title','agrega title') | QuickPoBox</title>
 	<meta name="robots" content="noindex,follow">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome_4_5_0/css/font-awesome.css')}}">
 
 	<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.quickpobox.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};

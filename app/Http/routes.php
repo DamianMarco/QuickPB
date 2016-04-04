@@ -22,29 +22,10 @@ GET, POST, PUT, DELETE, RESOURCE
 
 
 /*
-Authenticates
+
+
+Route::get('logout', [ 'uses' => 'Auth\AuthController@getLogout', 'as' => 'logout' ]);
 */
-
-Route::get('auth/login',[
-        'uses' => 'Auth\AuthController@getLogin',
-        'as' => 'auth.login'
-    ]);
-
-Route::post('auth/login',    [
-        'uses' => 'Auth\AuthController@postLogin',
-        'as' => 'auth.login'
-    ]);
-Route::get('auth/logout',    [
-        'uses' => 'Auth\AuthController@getLogout',
-        'as' => 'auth.logout'
-    ]);
-
-
-  Route::get('users/salir',    [
-        'uses' => 'UsuarioController@salir',
-        'as' => 'users.salir'
-    ]);
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -76,9 +57,13 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
  
+Route::auth();
 
+Route::get('/home', 'HomeController@index');
     //Route::resource('users','UsuarioController');
 
 });
+
+
 
 
