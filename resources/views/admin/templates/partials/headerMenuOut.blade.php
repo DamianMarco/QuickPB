@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="twelve columns">
 	
-			<div id="logo2"><a href="http://www.quickpobox.com" title="QuickPOBox">QuickPOBox</a></div><!--logo end-->
+			<div id="logo2"><a href="{{URL::to('/')}}" title="QuickPOBox">QuickPOBox</a></div><!--logo end-->
 		
 			
 
@@ -23,7 +23,12 @@
 <li id="menu-item-158" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-158"><a href="http://www.quickpobox.com/servicios/">Servicios</a></li>
 <li id="menu-item-218" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-218"><a href="http://www.quickpobox.com/tienda/">Tienda</a></li>
 <li id="menu-item-127" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-127"><a href="http://www.quickpobox.com/tipos-de-membresias/">Tipos de membresías</a></li>
-<li id="menu-item-294" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-294"><a href="http://www.quickpobox.com/my-account/">Login</a></li>
+@if(!Auth::user())
+	<li id="menu-item-294" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-294"><a href="{{route('users.create')}}">Login</a></li>
+@else
+	<li id="menu-item-294" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-294"><a href="{{route('users.salir')}}">Salir {{Auth::user()->nombreUsuario}}</a></li>
+@endif
+
 <li id="menu-item-216" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-216"><a href="http://www.quickpobox.com/my-account/">Mi cuenta</a></li>
 </ul><select class="selectnav" id="selectnav1"><option value="">- Navigation -</option><option value="http://www.quickpobox.com/nosotros/">Nosotros »</option><option value="http://www.quickpobox.com/ubicacion/">- Ubicación</option><option value="http://www.quickpobox.com/contacto/">- Contacto</option><option value="http://www.quickpobox.com/servicios/">Servicios</option><option value="http://www.quickpobox.com/tienda/">Tienda</option><option value="http://www.quickpobox.com/tipos-de-membresias/">Tipos de membresías</option><option value="http://www.quickpobox.com/my-account/">Login</option><option value="http://www.quickpobox.com/my-account/">Mi cuenta</option></select></div>  
 

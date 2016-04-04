@@ -588,7 +588,7 @@ word-wrap: break-word;
 	display: block;
 	margin: 5px 0;
 	padding: 0 0 0 20px;
-	background: url(images/bullet.png) no-repeat 0 7px;
+	background: url(wpthemes/images/bullet.png) no-repeat 0 7px;
 }
 
 .post-entry ol {
@@ -790,7 +790,7 @@ h3#comments-title {
 	display: block;
 	margin: 5px 0;
 	padding: 0 0 0 20px;
-	background: url(images/bullet.png) no-repeat 0 7px;
+	background: url(wpthemes/images/bullet.png) no-repeat 0 7px;
 }
 
 #comments .comment-body ol {
@@ -1208,7 +1208,7 @@ padding: 7px;
 }
 
 .widget-container-primary ul li {
-	background: url("images/bullet.png") no-repeat 0px 7px;
+	background: url("wpthemes/images/bullet.png") no-repeat 0px 7px;
 }
 
 .widget-container-primary ul li ul li{

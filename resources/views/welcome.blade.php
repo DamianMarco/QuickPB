@@ -5,5 +5,4 @@
 
 que pasion!!
 <a href="#" class="btn btn-success" >boost</a>
-
 @endsection

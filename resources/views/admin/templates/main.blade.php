@@ -12,7 +12,7 @@
 	<meta charset="UTF-8">
 	<title>@yield('title','agrega title') | QuickPoBox</title>
 	<meta name="robots" content="noindex,follow">
-	<!--link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}"-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}">
 
 	<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.quickpobox.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
@@ -91,7 +91,16 @@
 
 </head>
 <body>
+
 @include('admin/templates/partials/headerMenuOut')
+
+<div class="row">
+	<div class=".col-md-6 .col-md-offset-3">
+		<ul>
+			<li>@include('flash::message')</li>
+		</ul>
+	</div>
+</div>
 
 @yield('content')
 
@@ -135,6 +144,14 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 <script type="text/javascript" src="{{asset('css/wpthemes/css/woocommerce/js/wp-embed.min.js?ver=4.4.2')}}"></script>
 
 
-<!--script type="text/javascript" src="{{asset('vendor/bootstrap3_3_6/js/bootstrap.js')}}"></script-->
+<script type="text/javascript" src="{{asset('vendor/bootstrap3_3_6/js/bootstrap.js')}}"></script>
+
+<script type="text/javascript">
+    
+        jQuery("#flash-overlay-modal").modal();
+    
+</script>
+   
+</script>
 </body>
 </html>

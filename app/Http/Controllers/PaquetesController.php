@@ -20,4 +20,12 @@ class PaquetesController extends Controller
 		
      	dd($pacs);
      }
+
+    //retornar los paquedes paginados 5 en 5
+     public function index ()
+     {
+        $pacs = Paquete::orderBy('id','ASC')->paginate(5);
+
+        return view ('admin.paquetes.index') -> with('pacs',$pacs)
+     }
 }

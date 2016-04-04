@@ -15,26 +15,35 @@
 Rutas de tipo
 GET, POST, PUT, DELETE, RESOURCE
 */
-Route::get('/', function () {
-	//echo "la direccion show";
-    return view('welcome');
-});
-
-Route::group(['prefix' => 'qpb'], function(){
-
-	Route::get('viewpaquetes/{id}',[
-			'uses' => 'PaquetesController@view',
-			'as' => 'paquetesView'
-		]);
-});
-
-
-Route::get('paquetes/{id?}', function ($id = "naranjas") {
-   echo "la direccion show: " . $id;
-});
 
 
 
+
+
+
+/*
+Authenticates
+*/
+
+Route::get('auth/login',[
+        'uses' => 'Auth\AuthController@getLogin',
+        'as' => 'auth.login'
+    ]);
+
+Route::post('auth/login',    [
+        'uses' => 'Auth\AuthController@postLogin',
+        'as' => 'auth.login'
+    ]);
+Route::get('auth/logout',    [
+        'uses' => 'Auth\AuthController@getLogout',
+        'as' => 'auth.logout'
+    ]);
+
+
+  Route::get('users/salir',    [
+        'uses' => 'UsuarioController@salir',
+        'as' => 'users.salir'
+    ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +55,30 @@ Route::get('paquetes/{id?}', function ($id = "naranjas") {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
 Route::group(['middleware' => ['web']], function () {
-    //
+   
+    Route::get('/', function () {
+    //echo "la direccion show";
+     return view('welcome');
+    });
+
+
+    Route::get('index', function () {
+        return view('welcome');
+    });
+    
+    Route::resource('users','UsuarioController');
+
+
+   Route::post('users/authenticate',    [
+        'uses' => 'UsuarioController@authenticate',
+        'as' => 'users.authenticate'
+    ]);
+
+ 
+
+    //Route::resource('users','UsuarioController');
+
 });
+
+
