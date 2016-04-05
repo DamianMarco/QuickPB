@@ -82,3 +82,4 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 
+Route::resource('charges/payment', 'ChargesController@payment');

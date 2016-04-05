@@ -13,10 +13,12 @@ class AddFacturasTable extends Migration
     public function up()
     {
         Schema::create('facturas', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
 
             $table->integer('paquete_id')->unasigned();
-            $table->foreign('paquete_id')->references('id')->on('paquetes');
+            //$table->foreign('paquete_id')->references('id')->on('paquetes');
 
             //$table->binary('img_factura');
             $table->string('img_PathFactura',255);

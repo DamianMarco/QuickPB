@@ -18,10 +18,10 @@ class UsuarioController extends Controller
     public function __construct()
     {
         //Protege el controller
-        $this->middleware('auth');
+        //$this->middleware('auth');
         //expone rutas sin proteccion
-        $this->middleware('auth', ['except' => ['create','store']]);
-        $this->middleware('auth', ['except' => ['salir', 'getLogout']]);
+       // $this->middleware('auth', ['except' => ['create','store']]);
+        //$this->middleware('auth', ['except' => ['salir', 'getLogout']]);
        
  
     }

@@ -13,10 +13,11 @@ class AddPaquetesTable extends Migration
     public function up()
     {
         Schema::create('paquetes', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
 
-            $table->integer('usuario_id')->unasigned();
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->integer('usuario_id')->unasigned();            
 
             $table->float('alto');
             $table->float('ancho');
@@ -31,6 +32,8 @@ class AddPaquetesTable extends Migration
             $table->text('observaciones');
             $table->enum('enviarPaquete',['enEspera','enCotizacion','Cotizada','Aceptada']) -> default('enEspera');
             $table->timestamps();
+
+            //$table->foreign('usuario_id')->references('id')->on('usuarios');
         });
 /*
         Schema::create('paquetes_usuarios', function (Blueprint $table) {
