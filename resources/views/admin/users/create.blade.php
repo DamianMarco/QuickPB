@@ -60,18 +60,17 @@
 
 				
 				<p class="form-row">
-			{!!form::submit('Iniciar Sesión',['class'=>'btn btn-default', 'name'=>'login'])!!}
-
+				<button type="submit" class='btn btn-default' name='login'><i class="fa fa-user"></i> Iniciar Sesión</button>		
 				</p>		
 					<label for="remember" class="inline">
 						<input name="remember" type="checkbox" id="remember" value="forever"> Recordarme</label>
 				</p>
 				<p class="lost_password">
-					<a href="http://www.quickpobox.com/my-account/lost-password/">¿Olvidaste la contraseña?</a>
+					<a href="{{URL('password/reset')}}">¿Olvidaste la contraseña?</a>
 				</p>
 
 				
-				{!! Form::close() !!}
+			{!! Form::close() !!}
 
   </div>
   <div class="col-md-6">
@@ -105,8 +104,8 @@
 			<div style="left: -999em; position: absolute;"><label for="trap">Anti-spam</label><input type="text" name="email_2" id="trap" tabindex="-1"></div>
 
 						
-			<p class="form-row">			
-				{!!form::submit('Registrar',['class'=>'btn btn-default','name'=>'register'])!!}
+			<p class="form-row">	
+				<button type="submit" class='btn btn-default'><i class="fa fa-pencil"></i> Registrarse</button>		
 			</p>
 <br>
 			

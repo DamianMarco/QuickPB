@@ -19,17 +19,19 @@ class AddPaquetesTable extends Migration
 
             $table->integer('usuario_id')->unasigned();            
 
+            $table->string('folio',50)->nullable();;
+            $table->string('proveedor',100)->nullable();;
             $table->float('alto');
             $table->float('ancho');
             $table->float('largo');
             $table->float('peso');
             $table->enum('estatus',['enLaredo','enCurso','enTuCiudad','enEntrega','entregado']) -> default('enLaredo');
             /*Suite=  espacio donde esta ubicado el paquete en el almacen*/
-            $table->string('suite',100);
+            $table->string('suite',100)->nullable();;
             $table->enum('tipoPaquete',['sobre','paquete','tubo','valija','otro']) -> default('paquete');
-            $table->string('contenido',255);
-            $table->float('costo');
-            $table->text('observaciones');
+            $table->string('contenido',255)->nullable();;
+            $table->float('costo')->nullable();;
+            $table->text('observaciones')->nullable();;
             $table->enum('enviarPaquete',['enEspera','enCotizacion','Cotizada','Aceptada']) -> default('enEspera');
             $table->timestamps();
 

@@ -1344,7 +1344,7 @@ a img.aligncenter {
 
 .woocommerce-tabs .panel {
 	background: none;
-	border: none;
+	/*border: none;*/
 }
 
 .woocommerce h1 {
