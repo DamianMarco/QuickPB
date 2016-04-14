@@ -10,7 +10,7 @@ use Laracasts\Flash\Flash;
 use App\Http\Requests\UsuarioRequest;
 use Auth;
 use Hash;
-
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
@@ -75,6 +75,14 @@ class UsuarioController extends Controller
         $user->password = bcrypt($user->password);  
         //dd($request -> all());
         $user -> save();
+
+        $data = array( 'name' => $user->nombreUsuario, 'correo' => $user->email);
+
+       // Mail::send('emails.bienvenido', $data, function($message) use ($data)
+        //{
+         //   $message->to($data['correo'], $data['correo'])->subject('Bienvenido a QuickPoBox!'); 
+        //});
+        
         Flash::overlay('Usuario creado correctamente, revise su correo para confirmar el alta! ' . $user->nombreUsuario, 'Usuario creado');
 
         return redirect()->route('users.create');

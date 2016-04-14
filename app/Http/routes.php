@@ -43,13 +43,27 @@ Route::group(['middleware' => ['web']], function () {
      return view('welcome');
     });
 
+     Route::get('mailsee', function () {
+    //echo "la direccion show";
+     return view('emails/bienvenido');
+    });
+
 
     Route::get('index', function () {
         return view('welcome');
     });
     
     Route::resource('users','UsuarioController');
+    
 
+    ////PAQUETES
+    Route::get('packages/view', [
+        'middleware' => 'auth',
+        'uses' => 'PaquetesController@view',
+        'as' => 'packages.view'
+    ]);
+
+    /////FIN PAQUETES
 
    Route::post('users/authenticate',    [
         'uses' => 'UsuarioController@authenticate',
@@ -57,10 +71,10 @@ Route::group(['middleware' => ['web']], function () {
     ]);
 
  
-Route::auth();
+    Route::auth();
 
-Route::get('/home', 'HomeController@index');
-    //Route::resource('users','UsuarioController');
+    Route::get('/home', 'HomeController@index');
+        //Route::resource('users','UsuarioController');
 
 });
 
