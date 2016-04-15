@@ -10,7 +10,9 @@
         "laravelcollective/html": "^5.2",
         "cviebrock/eloquent-sluggable": "^3.1",
         "laracasts/flash": "^2.0",
-        "guzzlehttp/guzzle": "~5.0"
+        "guzzlehttp/guzzle": "~5.0",
+        "conekta/conekta-php": "dev-master"        
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -32,6 +32,7 @@
     <!-- Authentication Links -->
     @if (Auth::user())
     <li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
+    <li><a href="{{ url('pays/pagos') }}"><i class="fa fa-archive"></i> Mis Pagos</a></li>
      	<li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                <i class="fa fa-street-view"></i> {{ Auth::user()->nombreUsuario }} 

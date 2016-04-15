@@ -68,6 +68,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::auth();
     Route::get('/home', 'HomeController@index');
         //Route::resource('users','UsuarioController');
+    
+    ///PAGOS - CONEKTA
+        Route::get('pays/pagos', [
+        'uses' => 'PagosController@view',
+        'as' => 'pays.pagos'
+    ]);
+
+
+    ///PAGOS - EVENTO
+    Route::post('pays/payment', [
+        'uses' => 'PagosController@payment',
+        'as' => 'pays.payment'
+    ]);
 
 });
 
