@@ -746,7 +746,7 @@ dl.sub-nav dd a { text-decoration: none; -webkit-border-radius: 1000px; -moz-bor
 dl.sub-nav dd.active a { font-weight: bold; background: #fd7800; color: #fff; padding: 3px 9px; cursor: default; }
 
 /* Pagination ---------------------- */
-ul.pagination { display: block; height: 24px; margin-left: -5px; }
+ul.pagination { display: block; height: 33px; margin: 0px !important; margin-left: -5px;}
 ul.pagination li { float: left; display: block; height: 24px; color: #999; font-size: 14px; margin-left: 5px; }
 ul.pagination li a { display: block; padding: 1px 7px 1px; color: #555; }
 ul.pagination li:hover a, ul.pagination li a:focus { background: #e6e6e6; }
@@ -791,7 +791,7 @@ ul.link-list li a { display: block; }
 /* Tables ---------------------- */
 table { background: #fff; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; margin: 0 0 18px; border: 1px solid #ddd; }
 
-table thead, table tfoot { background: lightslategrey; }
+table thead, table tfoot { background: rgba(0, 0, 0, 0.15); }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td { font-size: 14px; line-height: 18px; text-align: left; }
 

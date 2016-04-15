@@ -4,9 +4,9 @@
 @section('content')
 
 
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Mis Paquetes</div>
+  <div class="panel-heading"><h3 class="panel-title">Mis Paquetes</h3></div>
   <div class="panel-body">
     <div class="alert" role="alert">
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
@@ -49,8 +49,8 @@
 		@endforeach
 		</tbody> 
 	</table>
-	{!! $packages-> render()!!}
 	</div>
+	<div class="panel-footer">{!! $packages-> render()!!}</div>
 </div>
 
 

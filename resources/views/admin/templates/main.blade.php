@@ -88,6 +88,10 @@
 				#nav li.current-cat > a{ 
 				background: #fd7800; 
 			}
+			.spaceMargen{
+				margin-left: 10px;
+				margin-right: 10px;
+			}
 			</style>
 
 </head>
@@ -102,8 +106,9 @@
 		</ul>
 	</div>
 </div>
-
-@yield('content')
+<div class="spaceMargen">
+	@yield('content')
+</div>
 
 @include('admin/templates/partials/footer')
 
