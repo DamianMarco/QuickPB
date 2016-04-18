@@ -22,7 +22,7 @@ class PaquetesController extends Controller
      	//$pacs = DB::table('paquetes')->where('usuario_id', $id)->get(); //App\Paquetes::where('usuario_id', $id)->get();
         $user = Auth::user();
 
-		$pacs = Paquete::where('usuario_id', $user->id)->paginate(5);
+		$pacs = Paquete::where('usuario_id', $user->id)->orderBy('id','ASC')->paginate(5);
 		$pacs->each(function($pacs){
 			$pacs -> usuario;
 		});

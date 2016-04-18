@@ -28,6 +28,7 @@ class UsuarioController extends Controller
  
     public function authenticate(Request $request)
     {
+          //  dd($request -> remember);
 
         $user = new Usuario($request -> all());
 
@@ -44,7 +45,10 @@ class UsuarioController extends Controller
         {
             if (Hash::check($user->password, $theUser->password))
                 {
-                    Auth::loginUsingId($theUser->id);
+
+                    Auth::login($theUser, (!is_null($request ->remember)? true:false));
+                    //Auth::attempt(['id' => $theUser->id,  'password' => $password], true);
+                    //Auth::loginUsingId($theUser->id);
                      return redirect()->intended('/index');
                 }
         }

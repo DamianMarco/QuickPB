@@ -31,19 +31,24 @@
 
     <!-- Authentication Links -->
     @if (Auth::user())
-    <li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
-    <li><a href="{{ url('pays/pagos') }}"><i class="fa fa-archive"></i> Mis Pagos</a></li>
-     	<li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-               <i class="fa fa-street-view"></i> {{ Auth::user()->nombreUsuario }} 
-            </a>
+    	@if (Auth::user()->rol == "admin")
+    		<li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Asignar paquete</a></li>
 
-            <ul class="dropdown-menu" role="menu">
-            	<li><a href="{{ url('/logout') }}"><i class="fa fa-user"></i> Mi cuenta</a></li>
-            	<li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
-                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
-            </ul>
-        </li>
+    	@else
+		    <li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
+		    <li><a href="{{ url('pays/pagos') }}"><i class="fa fa-archive"></i> Mis Pagos</a></li>
+		     	<li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		               <i class="fa fa-street-view"></i> {{ Auth::user()->nombreUsuario }} 
+		            </a>
+
+		            <ul class="dropdown-menu" role="menu">
+		            	<li><a href="{{ url('/logout') }}"><i class="fa fa-user"></i> Mi cuenta</a></li>
+		            	<li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
+		                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
+		            </ul>
+		        </li>
+	     @endif
     @else
         <li><a href="{{ url('/login') }}"><i class="fa fa-user"></i> Inicia sesión</a></li>
         <li><a href="{{ route('users.create') }}"><i class="fa fa-pencil"></i> ¡Registrate!</a></li>

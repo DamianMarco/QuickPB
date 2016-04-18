@@ -159,5 +159,8 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 </script>
    
 </script>
+
+@yield('misScripts')
+
 </body>
 </html>

@@ -63,7 +63,7 @@
 				<button type="submit" class='btn btn-default' name='login'><i class="fa fa-user"></i> Iniciar Sesión</button>		
 				</p>		
 					<label for="remember" class="inline">
-						<input name="remember" type="checkbox" id="remember" value="forever"> Recordarme</label>
+						<input name="remember" type="checkbox" id="remember"> Recordarme</label>
 				</p>
 				<p class="lost_password">
 					<a href="{{URL('password/reset')}}">¿Olvidaste la contraseña?</a>
