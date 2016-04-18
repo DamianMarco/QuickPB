@@ -82,6 +82,14 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'pays.payment'
     ]);
 
+
+////DIRECCIONES
+    Route::get('addresses/create', [
+        'middleware' => 'auth',
+        'uses' => 'DireccionesController@create',
+        'as' => 'addresses.view'
+    ]);
+
 });
 
 

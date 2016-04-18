@@ -20,7 +20,8 @@ class Direccion extends Model
 	    'ciudadMunicipio',
 	    'estado',
 	    'pais', 
-	    'codigoPostal'
+	    'codigoPostal',
+	    'tipo'
     ];
 
 	public function Usuario()

@@ -31,6 +31,7 @@ class AddDireccionesTable extends Migration
             $table->string('estado', 60);
             $table->string('pais', 60);
             $table->string('codigoPostal', 60);
+            $table->enum('tipo',['facturacion','envio']) -> default('envio');
             
             $table->timestamps();
         });
