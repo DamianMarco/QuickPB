@@ -85,10 +85,15 @@ Route::group(['middleware' => ['web']], function () {
 
 ////DIRECCIONES
     Route::get('addresses/create', [
-        'middleware' => 'auth',
         'uses' => 'DireccionesController@create',
         'as' => 'addresses.view'
     ]);
+
+    Route::post('addresses/store', [        
+        'uses' => 'DireccionesController@store',
+        'as' => 'addresses.store'
+    ]);
+
 
 });
 

@@ -43,7 +43,7 @@
 		            </a>
 
 		            <ul class="dropdown-menu" role="menu">
-		            	<li><a href="{{ url('/logout') }}"><i class="fa fa-user"></i> Mi cuenta</a></li>
+		            	<li><a href="{{ route('addresses.view') }}"><i class="fa fa-user"></i> Mi cuenta</a></li>
 		            	<li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
 		                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
 		            </ul>

@@ -2,43 +2,56 @@
 @section('title', 'Pagos')
 
 @section('content')
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+  <!-- panel facturacion -->
+  <div class="panel panel-default">     
+    <!-- Default panel contents -->
+    <div class="panel-heading">Datos de Pago</div>
+    <div class="panel-body">
+      {!! Form::open(['route'=> 'pays.payment', 'id'=>'card-form', 'method' => 'POST', 'class' => 'login']) !!}
 
-{!! Form::open(['route'=> 'pays.payment', 'id'=>'card-form', 'method' => 'POST', 'class' => 'login']) !!}
+      <!--form action="" method="POST" id="card-form"-->
+        <span class="card-errors"></span>
+        <div class="form-row">
+          <label>
+            <span>Nombre del tarjetahabiente</span>
+            <input type="text" class="form-control" size="20" data-conekta="card[name]"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            <span>Número de tarjeta de crédito</span>
+            <input type="text" class="form-control" size="20" data-conekta="card[number]" value="4242424242424242" />
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            <span>CVC</span>
+            <input type="text" class="form-control" size="4" data-conekta="card[cvc]"/>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            <span>Fecha de expiración (MM/AAAA)</span>
+            <input type="text" class="form-control" size="2" data-conekta="card[exp_month]"/>
+          </label>
+          <span>/</span>
+          <input type="text" class="form-control" size="4" data-conekta="card[exp_year]"/>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar </button>
+            </div>
+        </div>
+      <!--/form-->
 
-<!--form action="" method="POST" id="card-form"-->
-  <span class="card-errors"></span>
-  <div class="form-row">
-    <label>
-      <span>Nombre del tarjetahabiente</span>
-      <input type="text" size="20" data-conekta="card[name]"/>
-    </label>
+      {!! Form::close() !!}
+    </div>
   </div>
-  <div class="form-row">
-    <label>
-      <span>Número de tarjeta de crédito</span>
-      <input type="text" size="20" data-conekta="card[number]" value="4242424242424242" />
-    </label>
-  </div>
-  <div class="form-row">
-    <label>
-      <span>CVC</span>
-      <input type="text" size="4" data-conekta="card[cvc]"/>
-    </label>
-  </div>
-  <div class="form-row">
-    <label>
-      <span>Fecha de expiración (MM/AAAA)</span>
-      <input type="text" size="2" data-conekta="card[exp_month]"/>
-    </label>
-    <span>/</span>
-    <input type="text" size="4" data-conekta="card[exp_year]"/>
-  </div>
-  <button type="submit">¡Pagar ahora!</button>
-<!--/form-->
-
-{!! Form::close() !!}
-
-/* Scripts de conekta*/
+</div>
+</div>di
+<!-- Scripts de conekta -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
 
