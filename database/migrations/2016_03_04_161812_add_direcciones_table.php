@@ -15,10 +15,9 @@ class AddDireccionesTable extends Migration
         Schema::create('direcciones', function (Blueprint $table) {
             $table->increments('id');
             
-            //$table->integer('usuario_id')->unasigned();
-            //$table->foreign('usuario_id')->references('id')->on('usuarios');
-
-            $table->integer('usuario_id');            
+            $table->integer('usuario_id')->unsigned();
+            
+            //$table->integer('usuario_id');            
             $table->string('nombre', 100);
             $table->string('apellidoPaterno', 50);
             $table->string('apellidoMaterno', 50);
@@ -34,6 +33,8 @@ class AddDireccionesTable extends Migration
             $table->enum('tipo',['facturacion','envio']) -> default('envio');
             
             $table->timestamps();
+
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
         });
     }
 

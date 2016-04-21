@@ -8,6 +8,9 @@ use App\Http\Requests;
 use Auth;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
+use App\Usuario;
+use App\Direccion;
+use App\Pago;
 use Conekta;
 use Conekta_Charge;
 
@@ -31,6 +34,18 @@ class PagosController extends Controller
     {
     	//dd($request->all());
     	
+        $cargo = $request->all();
+
+        $user = Auth::user();      
+        $billing_address = Direccion::where('usuario_id', $user->id)->where('tipo','facturacion')->first();
+
+        if(is_null($billing_address))
+        {
+
+          Flash::overlay("Es necesario la dirección de facturacion", 'Error',2);
+            return view('admin.pays.pagos');
+        }
+
         //Clave privada
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
@@ -43,9 +58,9 @@ class PagosController extends Controller
                   'currency'=>'MXN',
                   'card'=> 'tok_test_visa_4242', // $_POST['conektaTokenId']
                   'details'=> array(
-                    'name'=> 'Arnulfo Quimare',
-                    'phone'=> '403-342-0642',
-                    'email'=> 'logan@x-men.org',
+                    'name'=> $billing_address->nombre." ".$billing_address->apellidoPaterno." ".$billing_address->apellidoMaterno, //'Arnulfo Quimare',
+                    'phone'=> $billing_address ->telefono, //'403-342-0642',
+                    'email'=> $user->email, //'logan@x-men.org',
                     'customer'=> array(
                       'logged_in'=> true,
                       'successful_purchases'=> 14,
@@ -56,26 +71,26 @@ class PagosController extends Controller
                     ),
                     'line_items'=> array(
                       array(
-                        'name'=> 'Box of Cohiba S1s',
-                        'description'=> 'Imported From Mex.',
+                        'name'=> 'ENVIO DE PAQUETE',
+                        'description'=> 'PAQUETE RECIBIDO #20102.',
                         'unit_price'=> 20000,
                         'quantity'=> 1,
                         'sku'=> 'cohb_s1',
-                        'category'=> 'food'
+                        'category'=> 'package'
                       )
                     ),
                     'billing_address'=> array(
-                      'street1'=>'77 Mystery Lane',
-                      'street2'=> 'Suite 124',
-                      'street3'=> null,
-                      'city'=> 'Darlington',
-                      'state'=>'NJ',
-                      'zip'=> '10192',
-                      'country'=> 'Mexico',
-                      'tax_id'=> 'xmn671212drx',
-                      'company_name'=>'X-Men Inc.',
-                      'phone'=> '77-777-7777',
-                      'email'=> 'purshasing@x-men.org'
+                      'street1'=>$billing_address->calle,
+                      'street2'=> $billing_address->numero,
+                      'street3'=> $billing_address->numerointerior,
+                      'city'=> $billing_address->ciudadMunicipio,
+                      'state'=>$billing_address->estado,
+                      'zip'=> $billing_address->codigoPostal,
+                      'country'=> $billing_address->pais,
+                      'tax_id'=> null, //'xmn671212drx',
+                      'company_name'=> $cargo["name"], // 'X-Men Inc.',
+                      'phone'=> $billing_address->telefono,//'77-777-7777',
+                      'email'=> $user->email//'purshasing@x-men.org'
                     )
                   )
                 ));
@@ -88,8 +103,29 @@ class PagosController extends Controller
          	  return view('admin.pays.pagos');
         	 
           // return View::make('pagos',array('message'=>$e->getMessage()));
-        }        
-        Flash::error($charge->status);
+        } 
+
+        $metodoPago = $charge->payment_method;
+
+        //dd($charge);
+// Se almacena la informacion del pago
+        $nuevoPago = new Pago();
+        $nuevoPago ->usuario_id=$user->id;
+        $nuevoPago ->paquete_id=0;
+
+        $nuevoPago ->referencia=$charge->reference_id;
+        $nuevoPago ->descripcion=$charge->description;
+        $nuevoPago ->titular=$cargo["name"];
+        $nuevoPago ->codigoAutorizacion=$metodoPago->auth_code;
+        $nuevoPago ->numeroTarjeta=$metodoPago->last4;
+        $nuevoPago ->monto=floatval($charge->amount);
+        $nuevoPago ->estatus=$charge->status;
+
+
+        $nuevoPago -> save();  
+
+        if($charge->status="paid")
+          Flash::overlay("El pago fue procesado con exito. Por favor verifique con su banco.");
         return view('admin.pays.pagos');
         //return View::make('pagos',array('message'=>$charge->status));
         

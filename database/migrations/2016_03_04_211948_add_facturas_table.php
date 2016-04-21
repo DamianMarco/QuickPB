@@ -17,12 +17,13 @@ class AddFacturasTable extends Migration
 
             $table->increments('id');
 
-            $table->integer('paquete_id')->unasigned();
-            //$table->foreign('paquete_id')->references('id')->on('paquetes');
+            $table->integer('paquete_id')->unsigned();
 
             //$table->binary('img_factura');
             $table->string('img_PathFactura',255);
             $table->timestamps();
+
+            $table->foreign('paquete_id')->references('id')->on('paquetes');
         });
     }
 
