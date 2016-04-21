@@ -9,7 +9,8 @@ class Paquete extends Model
     protected $table = "Paquetes";
 
     protected $fillable = [
-    	'folio',
+    	'usuario_id',
+        'folio',
     	'proveedor',
 		'alto',
 	    'ancho',

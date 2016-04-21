@@ -32,7 +32,13 @@
     <!-- Authentication Links -->
     @if (Auth::user())
     	@if (Auth::user()->rol == "admin")
-    		<li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Asignar paquete</a></li>
+    		<!--li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Asignar paquete</a></li-->
+    		<li id="menu-item-129" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-129"><a href="#" class="sf-with-ul"><i class="fa fa-archive" aria-hidden="true"></i> Administrar Paquetes</a>
+<ul class="sub-menu" style="display: none; visibility: hidden;">
+	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a href="{{ route('packages.create') }}"><i class="fa fa-get-pocket" aria-hidden="true"></i> Recibir paquete</a></li>
+	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a href="{{ route('packages.view') }}"><i class="fa fa-get-pocket" aria-hidden="true"></i> Ver paquetes</a></li>	
+</ul>
+</li>
 
     	@else
 		    <li><a href="{{ route('packages.view') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>

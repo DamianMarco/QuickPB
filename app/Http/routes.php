@@ -48,7 +48,6 @@ Route::group(['middleware' => ['web']], function () {
     });
     
     Route::resource('users','UsuarioController');
-    
 
     ////PAQUETES
     Route::get('packages/view', [
@@ -57,6 +56,25 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'packages.view'
     ]);
 
+    Route::get('packages/create', [
+        'uses' => 'PaquetesController@create',
+        'as' => 'packages.create'
+    ]);
+
+    Route::post('packages/store', [        
+        'uses' => 'PaquetesController@store',
+        'as' => 'packages.store'
+    ]);
+
+    Route::get('packages/edit/{id}', [        
+        'uses' => 'PaquetesController@edit',
+        'as' => 'packages.edit'
+    ]);
+
+    Route::post('packages/update', [        
+        'uses' => 'PaquetesController@update',
+        'as' => 'packages.update'
+    ]);
     /////FIN PAQUETES
 
    Route::post('users/authenticate',    [
@@ -93,7 +111,6 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DireccionesController@store',
         'as' => 'addresses.store'
     ]);
-
 
 });
 

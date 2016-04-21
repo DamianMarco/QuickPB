@@ -38,7 +38,13 @@
 			<td>{{$pack->estatus}}</td> 
 			<td>{{$pack->folio}}</td>
 			<td>{{$pack->proveedor}}</td>
-			<td><button type="button" class="btn btn-default" onclick="modalDetalle('{{$pack->folio}}','{{$pack->proveedor}}','{{$pack->contenido}}','{{$pack->costo}}','{{$pack->observaciones}}')"><i class="fa fa-eye" aria-hidden="true"></i> Ver Detalle</button></td>
+			<td>
+			@if (Auth::user()->rol == "admin")
+				<a class="btn btn-default" href="{{ route('packages.edit', $pack->id) }}"><i class="fa fa-eye" aria-hidden="true"></i> Modificar</a>
+			@else			
+				<button type="button" class="btn btn-default" onclick="modalDetalle('{{$pack->folio}}','{{$pack->proveedor}}','{{$pack->contenido}}','{{$pack->costo}}','{{$pack->observaciones}}')"><i class="fa fa-eye" aria-hidden="true"></i> Ver Detalle</button>
+			@endif
+			</td>
 			<td>{{$pack->contenido}}</td>
 			<td>
 			 @if(strlen ($pack->observaciones) > 10)
