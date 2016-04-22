@@ -55,7 +55,7 @@ jQuery(document).ready(function(){
         formatters: {
             "commands": function(column, row)
             {
-                return "<button type=\"button\" class=\"btn btn-xs btn-default command-update\" data-row-id=\"" + row.id + "\" data-row-value=\"" + row.nombreUsuario + "\"><span class=\"fa fa-pencil\"></span> update</button>";
+                return "<button type=\"button\" class=\"btn btn-xs btn-default command-update\" data-row-id=\"" + row.id + "\" data-row-value=\"" + row.nombreUsuario + "\"><span class=\"fa fa-hand-pointer-o\"></span> Seleccionar</button>";
             }
         }
     }).on("loaded.rs.jquery.bootgrid", function()

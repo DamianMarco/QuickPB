@@ -125,24 +125,21 @@ class UsuarioController extends Controller
         return view('admin.users.view');
     }
 
-    public function apiList()
+    public function apiList(Request $request)
     {
-        //$rowCount = $request->input('rowCount');
-        //$current = $request->input('current');
-        //$searchPhrase = $request->input('searchPhrase');
+        $params = $request->all();        
 
-        //$take = (is_null($rowCount)) ? $rowCount : 10;
-        //$skip = (is_null($current)) ? $current-1 : 0;
+        $rowCount = (isset($params['rowCount']))?$params['rowCount']:10;
+        $current = (isset($params['current']))?$params['current']:1;
+        $searchPhrase = (isset($params['searchPhrase'])) ? $params['searchPhrase'] : '';
 
-        $take = 10;
-        $skip = 0;
+        $take = ($rowCount <> 10) ? $rowCount : 10;
+        $skip = ($current > 1) ? $current-1 : 0;
 
-        //$searchPhrase = (is_null($searchPhrase)) ? $searchPhrase : '';
-     
-        $searchPhrase ='';
-
-        //$users = Usuario::where('email', $searchPhrase)->take($take)->skip($skip)->get();
-        $users = Usuario::all();
+        //dd($rowCount);
+        //->orWhere('name', 'John')
+        $users = Usuario::where('id','like', '%'.$searchPhrase.'%')->orWhere('email','like', '%'.$searchPhrase.'%')->orWhere('nombreUsuario','like', '%'.$searchPhrase.'%')->take($take)->skip($skip)->get();
+        //$users = Usuario::all();
 
         $rows = [];
         foreach($users as $row) {

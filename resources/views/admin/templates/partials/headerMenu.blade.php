@@ -4,8 +4,8 @@
 	<div class="row">
 		<div class="twelve columns">
 	
-			<div id="logo2"><a href="{{URL::to('/')}}" title="QuickPOBox">QuickPOBox</a></div><!--logo end-->
-		
+			<!--div id="logo2"><a href="{{URL::to('/')}}" title="QuickPOBox">QuickPOBox</a></div><!--logo end-->
+		<div id="logo2"><a href="{{URL::to('/')}}" class="image featured" title="QuickPOBox"><img src="{{URL::to('/images/logoQPOBox.png')}}" alt="" /></a></div>
 			
 
 	
@@ -37,6 +37,7 @@
 <ul class="sub-menu" style="display: none; visibility: hidden;">
 	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a href="{{ route('packages.create') }}"><i class="fa fa-get-pocket" aria-hidden="true"></i> Recibir paquete</a></li>
 	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a href="{{ route('packages.view') }}"><i class="fa fa-get-pocket" aria-hidden="true"></i> Ver paquetes</a></li>	
+	<li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
 </ul>
 </li>
 

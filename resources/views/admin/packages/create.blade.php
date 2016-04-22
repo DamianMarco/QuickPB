@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	@endif
-	<div class="col-md-6 col-md-offset-3">		
+	<div class="col-md-8 col-md-offset-3">		
 	  
 		<!-- panel facturacion -->
 		<div class="panel panel-default">  		
@@ -32,17 +32,28 @@
 			    	<label for="nombreUsuario" class="col-sm-2 control-label">Destinatario</label>
 			    	<div class="col-sm-10">
 			    	@if(isset($nombreUsuario))
-						<input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="{{ $nombreUsuario }}">
-					@else
-						<input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="">
+			    		<!--div class="search form-group">
+							<div class="input-group">
+								 <a class="btn btn-default" href="{{ route('users.view') }}"><span class="icon glyphicon input-group-addon glyphicon-search"></span></a>								 					
+								 <input type="text" disabled class="search-field form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="{{ $nombreUsuario }}">
+							</div>
+						</div-->
+			    		<div class="input-group">
+					      <input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="{{ $nombreUsuario }}">
+					      <span class="input-group-btn">					        
+					        <a class="btn btn-default" href="{{ route('users.view') }}" type="button">Buscar</a>
+					      </span>
+					    </div>
+					@else						
+						<div class="input-group">
+					      <input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="">
+					      <span class="input-group-btn">					        
+					        <a class="btn btn-default" href="{{ route('users.view') }}">Buscar</a>
+					      </span>
+					    </div>
 					@endif	
 					</div>
-				</div>
-				<div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <a href="{{ route('users.view') }}"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>					      
-				    </div>
-				  </div>
+				</div>				
 				 <br/> 
 				 <br/> 
 				 <br/>
