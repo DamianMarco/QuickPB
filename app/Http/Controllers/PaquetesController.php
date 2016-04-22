@@ -102,5 +102,18 @@ class PaquetesController extends Controller
 
         return redirect()->back();
     }
+
+    public function take($usuario_id,$nombreUsuario)
+    {             
+        //Este es el administrador   
+        $user = Auth::user();        
+
+
+        //dd($paquete);        
+                
+        return view('admin.packages.create')->with('paquete',null)->with('usuario_id',$usuario_id)->with('nombreUsuario',$nombreUsuario);        
+    }
+
+
      
 }

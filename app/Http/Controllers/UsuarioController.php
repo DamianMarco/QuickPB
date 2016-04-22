@@ -104,5 +104,65 @@ class UsuarioController extends Controller
         Flash::overlay('!Datos actualizado correctamente! ' , 'Actualizo sus datos.');
         return redirect()->route('users.create');
     }
+
+    public function view()
+    {           
+
+        $user = Auth::user();
+
+        //$usuarios = Usuario::all();        
+        
+        /*$jsonData='{';        
+        $jsonData=$jsonData.'"current" : 1,';
+        $jsonData=$jsonData.'"rowCount" : 10,';
+        $jsonData=$jsonData.'"rows" : '.$usuarios->toJson().',';
+        $jsonData=$jsonData.'"total" :'.$usuarios->count().'}';*/
+        
+        //dd($jsonData);
+
+        //dd($usuarios->toJson());
+
+        return view('admin.users.view');
+    }
+
+    public function apiList()
+    {
+        //$rowCount = $request->input('rowCount');
+        //$current = $request->input('current');
+        //$searchPhrase = $request->input('searchPhrase');
+
+        //$take = (is_null($rowCount)) ? $rowCount : 10;
+        //$skip = (is_null($current)) ? $current-1 : 0;
+
+        $take = 10;
+        $skip = 0;
+
+        //$searchPhrase = (is_null($searchPhrase)) ? $searchPhrase : '';
+     
+        $searchPhrase ='';
+
+        //$users = Usuario::where('email', $searchPhrase)->take($take)->skip($skip)->get();
+        $users = Usuario::all();
+
+        $rows = [];
+        foreach($users as $row) {
+     
+            $rows[] = array(
+                'id' => $row->id,
+                'email' => $row->email,
+                'nombreUsuario' => $row->nombreUsuario,
+                'estatus' => $row->estatus
+            );
+        }
+     
+        $data = array(
+            'current' => $skip,
+            'rowCount' => $take,
+            'rows' => $rows,
+            'total' => count($users),
+        );
+     
+        return json_encode($data);
+    }
    
 }

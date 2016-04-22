@@ -22,14 +22,37 @@
 			<!-- Default panel contents -->
 			<div class="panel-heading">Recepción de Paquete</div>
 			<div class="panel-body">
+						
 			@if(!is_null($paquete))			
 				{!! Form::model($paquete, ['method' => 'POST','route' => ['packages.update']]) !!}
-				{!! Form::hidden('id', $paquete->id) !!}
+				{!! Form::hidden('id', $paquete->id) !!}				
 				{!! Form::hidden('usuario_id', $paquete->usuario_id) !!}
 			@else
+				<div class="form-group">
+			    	<label for="nombreUsuario" class="col-sm-2 control-label">Destinatario</label>
+			    	<div class="col-sm-10">
+			    	@if(isset($nombreUsuario))
+						<input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="{{ $nombreUsuario }}">
+					@else
+						<input type="text" disabled class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Destinatario" value="">
+					@endif	
+					</div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <a href="{{ route('users.view') }}"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>					      
+				    </div>
+				  </div>
+				 <br/> 
+				 <br/> 
+				 <br/>
 				{!! Form::open(['route'=> 'packages.store', 'id'=>'recieve-form', 'method' => 'POST']) !!}
-				<input type="text" class="form-control" id="usuario_id" name="usuario_id" value="">
-			@endif			
+				@if(!isset($usuario_id))
+					{!! Form::hidden('usuario_id', null) !!}
+				@else
+					{!! Form::hidden('usuario_id', $usuario_id) !!}
+				@endif		
+			@endif								
 		  		<div class="form-group">
 			    	<label for="folio" class="col-sm-2 control-label">Folio</label>
 				    <div class="col-sm-10">						    					  
