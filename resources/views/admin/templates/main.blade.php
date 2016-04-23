@@ -13,6 +13,7 @@
 	<meta charset="UTF-8">
 	<title>@yield('title','agrega title') | QuickPoBox</title>
 	<meta name="robots" content="noindex,follow">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.bootgrid.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome_4_5_0/css/font-awesome.css')}}">
 
@@ -164,6 +165,7 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 
 
 <script type="text/javascript" src="{{asset('vendor/bootstrap3_3_6/js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{asset('vendor/jquery/jquery.bootgrid.min.js')}}"></script>
 
 <script type="text/javascript">
     

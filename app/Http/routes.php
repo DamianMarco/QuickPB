@@ -46,9 +46,21 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('index', function () {
         return view('welcome');
     });
+
+    Route::get('users/list', [     
+        'middleware' => 'auth',   
+        'uses' => 'UsuarioController@apiList',
+        'as' => 'users.list'
+    ]);
+
+    Route::get('users/view', [     
+        'middleware' => 'auth',   
+        'uses' => 'UsuarioController@view',
+        'as' => 'users.view'
+    ]);
     
     Route::resource('users','UsuarioController');
-    
+
 
     ////PAQUETES
     Route::get('packages/view', [
@@ -56,6 +68,7 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'packages.view'
     ]);
 
+<<<<<<< HEAD
     Route::post('packages/storeimage', [
         'middleware' => 'cors',
         'uses' => 'PaquetesController@storeimage',
@@ -72,6 +85,32 @@ Route::group(['middleware' => ['web']], function () {
     });
 
 
+=======
+    Route::get('packages/create', [
+        'uses' => 'PaquetesController@create',
+        'as' => 'packages.create'
+    ]);
+
+    Route::post('packages/store', [        
+        'uses' => 'PaquetesController@store',
+        'as' => 'packages.store'
+    ]);
+
+    Route::get('packages/edit/{id}', [        
+        'uses' => 'PaquetesController@edit',
+        'as' => 'packages.edit'
+    ]);
+
+    Route::get('packages/take/{usuario_id}/{nombreUsuario}', [        
+        'uses' => 'PaquetesController@take',
+        'as' => 'packages.take'
+    ]);
+
+    Route::post('packages/update', [        
+        'uses' => 'PaquetesController@update',
+        'as' => 'packages.update'
+    ]);
+>>>>>>> origin/master
     /////FIN PAQUETES
 
    Route::post('users/authenticate',    [
@@ -108,7 +147,6 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'DireccionesController@store',
         'as' => 'addresses.store'
     ]);
-
 
 });
 

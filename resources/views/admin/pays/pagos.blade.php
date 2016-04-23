@@ -16,29 +16,31 @@
         <div class="form-row">
           <label>
             <span>Nombre del tarjetahabiente</span>
-            <input type="text" class="form-control" size="20" data-conekta="card[name]"/>
+            <input type="text" class="form-control" name="name" size="20" data-conekta="card[name]"/>
           </label>
         </div>
         <div class="form-row">
           <label>
             <span>Número de tarjeta de crédito</span>
-            <input type="text" class="form-control" size="20" data-conekta="card[number]" value="4242424242424242" />
+            <input type="text" class="form-control" size="20" name="number" data-conekta="card[number]" value="4242424242424242" />
           </label>
         </div>
         <div class="form-row">
           <label>
             <span>CVC</span>
-            <input type="text" class="form-control" size="4" data-conekta="card[cvc]"/>
+            <input type="text" class="form-control" size="4" name="cvc" data-conekta="card[cvc]"/>
           </label>
-        </div>
-        <div class="form-row">
-          <label>
-            <span>Fecha de expiración (MM/AAAA)</span>
-            <input type="text" class="form-control" size="2" data-conekta="card[exp_month]"/>
-          </label>
-          <span>/</span>
-          <input type="text" class="form-control" size="4" data-conekta="card[exp_year]"/>
-        </div>
+        </div>        
+          <div class="form-row">
+            <label>
+              <span>Fecha de expiración (MM/AAAA)</span>  
+              <div class="form-inline">
+                <input type="text" class="form-control" size="2" name="exp_month" data-conekta="card[exp_month]"/>          
+                <span>/</span>
+                <input type="text" class="form-control" size="4" name="exp_year" data-conekta="card[exp_year]"/>
+              </div>
+           </label>             
+          </div>                    
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-default"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar </button>
@@ -50,7 +52,7 @@
     </div>
   </div>
 </div>
-</div>di
+</div>
 <!-- Scripts de conekta -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
