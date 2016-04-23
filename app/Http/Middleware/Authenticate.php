@@ -17,6 +17,9 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+
+
+
         if (Auth::guard($guard)->guest()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
@@ -25,6 +28,8 @@ class Authenticate
             }
         }
 
-        return $next($request);
+        return $next($request)->header('Access-Control-Allow-Origin' , '*')
+          ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
+          ->header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With');
     }
 }

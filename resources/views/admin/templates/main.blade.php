@@ -2,6 +2,7 @@
 
 <html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js" lang="es-MX">
 <head>
+<meta name="_token" content="{!! csrf_token() !!}"/>
 <div class="fit-vids-style">&shy;
 <style>               
 	.fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }
@@ -48,6 +49,18 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/superfish.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/wpthemes/js/discover/css/flexslider.css?ver=4.4.2')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/foundation/foundation.css')}}">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
+	<style type="text/css">
+	    a.fancybox img {
+	        border: none;
+	        box-shadow: 0 1px 7px rgba(0,0,0,0.6);
+	        -o-transform: scale(1,1); -ms-transform: scale(1,1); -moz-transform: scale(1,1); -webkit-transform: scale(1,1); transform: scale(1,1); -o-transition: all 0.2s ease-in-out; -ms-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;
+	    } 
+	    a.fancybox:hover img {
+	        position: relative; z-index: 999; -o-transform: scale(1.03,1.03); -ms-transform: scale(1.03,1.03); -moz-transform: scale(1.03,1.03); -webkit-transform: scale(1.03,1.03); transform: scale(1.03,1.03);
+	    }
+	</style>
 	
 	<script type="text/javascript" src="{{asset('vendor/jquery/jquery-1.11.3.js')}}"></script>
 	<script type="text/javascript" src="{{asset('vendor/jquery/jquery-migrate.min.js?ver=1.2.1')}}"></script>
@@ -113,7 +126,7 @@
 @include('admin/templates/partials/footer')
 
 
-
+<script type="text/javascript" src="{{asset('js/quickscript.js')}}"></script>
 <script type="text/javascript" src="{{asset('css/wpthemes/js/discover/superfish.js')}}"></script>
 <script type="text/javascript" src="{{asset('css/wpthemes/js/discover/jquery.custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('css/wpthemes/js/discover/jquery.fitvids.js?ver=1.0')}}"></script>
@@ -160,6 +173,13 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
    
 </script>
 
+<script type="text/javascript">var virtualPath='http://localhost:81/quickpb/public/index.php';</script>
+<script type="text/javascript">
+jQuery.ajaxSetup({
+   headers: { 'X-CSRF-Token' : jQuery('meta[name=_token]').attr('content') }
+   headers: ('Access-Control-Allow-Origin: *');
+});
+</script>
 @yield('misScripts')
 
 </body>

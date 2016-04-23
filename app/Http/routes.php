@@ -52,10 +52,25 @@ Route::group(['middleware' => ['web']], function () {
 
     ////PAQUETES
     Route::get('packages/view', [
-        'middleware' => 'auth',
         'uses' => 'PaquetesController@view',
         'as' => 'packages.view'
     ]);
+
+    Route::post('packages/storeimage', [
+        'middleware' => 'cors',
+        'uses' => 'PaquetesController@storeimage',
+        'as' => 'packages.storeimage'
+    ]);
+
+    Route::get('packages/storeimage', function() {
+      return View::make('admin.packages.view');
+    });
+
+    Route::post('test',['middleware' => 'cors'], function()
+    {
+        return 'Success! ajax in laravel 5';
+    });
+
 
     /////FIN PAQUETES
 
