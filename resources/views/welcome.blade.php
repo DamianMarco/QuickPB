@@ -18,7 +18,7 @@
 
 								<!-- Feature -->
 									<section>
-										<a href="#" class="image featured"><img src="images/reception.png" alt="" /></a>
+										<a href="#" class="image featured"><img src="{{asset('images/reception.png')}}" alt="" /></a>
 										<header>
 											<h3>Recibimos tu paquete</h3>
 										</header>
@@ -32,7 +32,7 @@
 
 								<!-- Feature -->
 									<section>
-										<a href="#" class="image featured"><img src="images/transit.png" alt="" /></a>
+										<a href="#" class="image featured"><img src="{{asset('images/transit.png')}}" alt="" /></a>
 										<header>
 											<h3>Lo trasladamos</h3>
 										</header>
@@ -46,7 +46,7 @@
 
 								<!-- Feature -->
 									<section>
-										<a href="#" class="image featured"><img src="images/delivery.png" alt="" /></a>
+										<a href="#" class="image featured"><img src="{{asset('images/delivery.png')}}" alt="" /></a>
 										<header>
 											<h3>Lo recibes en M&eacute;xico</h3>
 										</header>

@@ -19,10 +19,12 @@ class AddPagosTable extends Migration
             $table->increments('id');
             //$table->integer('usuario_id'); 
             $table->integer('usuario_id')->unsigned();
-            
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
+           
             // relacionar con paquete
-            $table->integer('paquete_id');
-            //$table->integer('paquete_id')->unsigned();
+            //$table->integer('paquete_id');
+            $table->integer('paquete_id')->unsigned();
+            $table->foreign('paquete_id')->references('id')->on('paquetes');
 
             $table->string('referencia',100);
             $table->string('descripcion',100);
@@ -34,8 +36,7 @@ class AddPagosTable extends Migration
             
             $table->timestamps();
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
-            //$table->foreign('paquete_id')->references('id')->on('paquetes');
+            
         });    
     }
 

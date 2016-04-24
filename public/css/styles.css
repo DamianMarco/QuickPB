@@ -31,8 +31,76 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 /*////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
+/* navbar COLOR Change*/
+.navbar-default {
+    background-color: #fff;
+    border-color: #E7E7E7;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: #777;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #5E5E5E;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #777;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #333;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
 
 
+/* END navbar COLOR Change*/
+
+/* //////////Link insede NavBar////////////*/
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  background-color: #FFD0A6;
+  color: #000;
+}
+/* //////////END Link insede NavBar////////////////*/
+
+
+.separadorMenu{
+	float: right;
+    padding: 5px 5px;
+    line-height: 20px;
+    font-weight: bold;
+    text-align: center;
+}
 
 body {
 	background: #ccc;
@@ -252,7 +320,7 @@ th {
 }
 
 #header_container{
-	padding-bottom: 25px;
+	/*padding-bottom: 25px;*/
 	padding-top: 0px;
 	background: #fff;
 }

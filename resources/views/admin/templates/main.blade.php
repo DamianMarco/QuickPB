@@ -179,7 +179,6 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 <script type="text/javascript">
 jQuery.ajaxSetup({
    headers: { 'X-CSRF-Token' : jQuery('meta[name=_token]').attr('content') }
-   headers: ('Access-Control-Allow-Origin: *');
 });
 </script>
 @yield('misScripts')

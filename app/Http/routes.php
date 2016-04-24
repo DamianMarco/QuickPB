@@ -42,7 +42,6 @@ Route::group(['middleware' => ['web']], function () {
      return view('emails/bienvenido');
     });
 
-
     Route::get('index', function () {
         return view('welcome');
     });
@@ -68,7 +67,7 @@ Route::group(['middleware' => ['web']], function () {
         'as' => 'packages.view'
     ]);
 
-<<<<<<< HEAD
+
     Route::post('packages/storeimage', [
         'middleware' => 'cors',
         'uses' => 'PaquetesController@storeimage',
@@ -84,8 +83,6 @@ Route::group(['middleware' => ['web']], function () {
         return 'Success! ajax in laravel 5';
     });
 
-
-=======
     Route::get('packages/create', [
         'uses' => 'PaquetesController@create',
         'as' => 'packages.create'
@@ -110,7 +107,7 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'PaquetesController@update',
         'as' => 'packages.update'
     ]);
->>>>>>> origin/master
+
     /////FIN PAQUETES
 
    Route::post('users/authenticate',    [

@@ -16,6 +16,7 @@ class AddDireccionesTable extends Migration
             $table->increments('id');
             
             $table->integer('usuario_id')->unsigned();
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             
             //$table->integer('usuario_id');            
             $table->string('nombre', 100);
@@ -34,7 +35,7 @@ class AddDireccionesTable extends Migration
             
             $table->timestamps();
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+           
         });
     }
 

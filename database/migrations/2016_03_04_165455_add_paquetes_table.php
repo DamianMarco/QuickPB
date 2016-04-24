@@ -18,7 +18,8 @@ class AddPaquetesTable extends Migration
             $table->increments('id');
 
             $table->integer('usuario_id')->unsigned();            
-
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            
             $table->string('folio',50)->nullable();;
             $table->string('proveedor',100)->nullable();;
             $table->float('alto');
@@ -35,7 +36,7 @@ class AddPaquetesTable extends Migration
             $table->enum('enviarPaquete',['enEspera','enCotizacion','Cotizada','Aceptada']) -> default('enEspera');
             $table->timestamps();
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+           
         });
 /*
         Schema::create('paquetes_usuarios', function (Blueprint $table) {
