@@ -13,7 +13,7 @@
 	<meta charset="UTF-8">
 	<title>@yield('title','agrega title') | QuickPoBox</title>
 	<meta name="robots" content="noindex,follow">
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.bootgrid.min.css')}}">
+
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome_4_5_0/css/font-awesome.css')}}">
 
@@ -36,6 +36,8 @@
 			padding: 0 !important;
 		}
 	</style>
+	
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/lightgallery/css/lightgallery.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/wpthemes/css/woocommerce/woocommerce-layout.css?ver=2.4.12')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/wpthemes/css/woocommerce/woocommerce-smallscreen.css?ver=2.4.12')}}">
@@ -67,6 +69,8 @@
 	<script type="text/javascript" src="{{asset('vendor/jquery/jquery-migrate.min.js?ver=1.2.1')}}"></script>
 	<script type="text/javascript" src="{{asset('css/wpthemes/js/discover/modernizr.js')}}"></script>
 	<script type="text/javascript" src="{{ asset('css/wpthemes/css/fileup/wordpress_file_upload_functions.js?ver=4.4.2')}}"></script>
+	<script type="text/javascript" src="{{asset('css/lightgallery/js/lightgallery.min.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 	<style>
 			a{ 
 				color: #fd7800; 
@@ -126,7 +130,6 @@
 
 @include('admin/templates/partials/footer')
 
-
 <script type="text/javascript" src="{{asset('js/quickscript.js')}}"></script>
 <script type="text/javascript" src="{{asset('css/wpthemes/js/discover/superfish.js')}}"></script>
 <script type="text/javascript" src="{{asset('css/wpthemes/js/discover/jquery.custom.js')}}"></script>
@@ -174,8 +177,9 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 </script>
    
 </script>
-
-<script type="text/javascript">var virtualPath='http://localhost:81/quickpb/public/index.php';</script>
+<script type="text/javascript" src="{{asset('css/lightgallery/js/lg-thumbnail.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('css/lightgallery/js/lg-fullscreen.min.js')}}"></script>
+<script type="text/javascript">var virtualPath= "{{ asset('/index.php') }}";//'http://localhost:81/quickpb/public/index.php';</script>
 <script type="text/javascript">
 jQuery.ajaxSetup({
    headers: { 'X-CSRF-Token' : jQuery('meta[name=_token]').attr('content') }

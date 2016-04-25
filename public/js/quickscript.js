@@ -18,8 +18,8 @@ function Mensaje(titulo, mensaje) {
 
 function Informacion(titulo, datos) {
     var _modal = "<div id='info' class='modal fade'><div class='modal-dialog'><div class='modal-content'>" +
-      "<div class='modal-header bg-info'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title'>" + titulo + "</h4></div>" +
-      "<div class='modal-body'><strong><p>" + datos + "</p></strong></div>" +
+      "<div class='modal-header bg-info'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title'> " + titulo + "</h4></div>" +
+      "<div class='modal-body'><strong><p>" + datos + "</p></strong></div>" + 
       "<div class='modal-footer'><button type='button' class='btn btn-info' onclick=\"jQuery('#info').modal('hide');\">Cerrar</button></div>" +
       "</div></div></div>";
 
@@ -32,12 +32,30 @@ function Informacion(titulo, datos) {
     jQuery('#info').modal('show');
 }
 
-function MessageWarning(title, data) {
+function MensajeImage(titulo, mensaje) {
+    var _modal = "<div id='mjs' class='modal fade'><div class='modal-dialog'><div class='modal-content'>" +
+      "<div class='modal-header bg-success'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title'>" + titulo + "</h4></div>" +
+      "<div class='modal-body'><strong><p>" + mensaje + "</p></strong></div>" +
+      "<div class='modal-footer'><button type='button' class='btn btn-success' onclick=\"closeandrefresh()\"><span class='glyphicon glyphicon-ok'></span>&nbsp;<strong>Aceptar</strong></button></div>" +
+      "</div></div></div>";
+
+
+
+    jQuery("body").append(_modal);
+
+    jQuery('#mjs').on('hidden.bs.modal', function () {
+        jQuery("#mjs").remove();
+    });
+
+    jQuery('#mjs').modal('show');
+}
+
+function MessageWarningImage(title, data) {
     var _modal = "<div id='info' class='modal fade'><div class='modal-dialog'><div class='modal-content'>" +
       "<div class='modal-header bg-warning'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button> " +
-      "<h4 class='modal-title'><strong>" + title + "</strong></h4></div>" +
+      "<h4 class='modal-title'><i class='fa fa-exclamation-triangle' ></i> <strong> " + title + "</strong></h4></div>" +
       "<div class=' bs-callout modal-body'>" + data + "</div>" +
-      "<div class='modal-footer'><button type='button' class='btn btn-warning' onclick=\"jQuery('#info').modal('hide');\"><span class=\"glyphicon glyphicon-warning-sign\"></span>&nbsp;<strong>Cerrar</strong></button></div>" +
+      "<div class='modal-footer'><button type='button' class='btn btn-warning' onclick=\"jQuery('#info').modal('hide');\"><i class='fa fa-exclamation-triangle' ></i>&nbsp;<strong>Cerrar</strong></button></div>" +
       "</div></div></div>";
 
     jQuery("body").append(_modal);

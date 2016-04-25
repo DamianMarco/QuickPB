@@ -8,11 +8,12 @@ use App\Http\Requests;
 use Auth;
 use App\Paquete;
 use App\Usuario;
+use App\Factura;
 use App\Http\Requests\PaqueteRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class PaquetesController extends Controller
@@ -23,49 +24,68 @@ class PaquetesController extends Controller
         $this->middleware('auth');
     }
 
-     public function view()
+     public function packagesview()
      {
      	//$pacs = DB::table('paquetes')->where('usuario_id', $id)->get(); //App\Paquetes::where('usuario_id', $id)->get();
         $user = Auth::user();
 
-		$pacs = Paquete::where('usuario_id', $user->id)->orderBy('id','ASC')->paginate(5);
-		$pacs->each(function($pacs){
-			$pacs -> usuario;
-		});
-		
-     	//dd($pacs);
-        return view('admin.packages.view')->with('packages', $pacs);
+    		$pacs = Paquete::where('usuario_id', $user->id)->orderBy('id','ASC')->paginate(5);
+    		$pacs->each(function($pacs){
+    			$pacs -> usuario;
+          $pacs -> factura;
+    		});
+  		
+     	//dd($pacs->all());
+        return view('admin.packages.packagesview')->with('packages', $pacs);
      }
 
      public function storeimage(Request $request)
      {
-      
-        $user = Auth::user();
-        $user->rol = "cliente";
-        $user->save();
-       /*
-        $user = Auth::user();
-        $file = $request->file('image');
-        $name = $user->nombreUsuario . time() . $file->getClientOriginalExtension();
-        $path = public_path() . '/images_bills/';
-        $file->move($path, $name);
-         if(Request::ajax()) {
-              $data = Input::all();
-              $bls= Input::get('firstname'),
-              print_r($data);die;
-              return ($data);
-        }*/
-        if(Request::ajax()) {
-            $data = Request::all();
-            //print_r($user);die;
+       if(Request::ajax()) {
+          $user = Auth::user();
+          $factura = new Factura();
+          $data = Request::all();
 
-            return response()->json([
-                    "success"=>"true", "algomas"=>'nada'
-                ], 200);
+          $factura->paquete_id = $data['paquete_id'];  
+                
+          $file = $data['userfile'];
+
+          // Build the input for validation
+          $fileArray = array('image' => $file);
+
+          // Tell the validator that this file should be an image
+          $rules = array(
+            'image' => 'mimes:jpeg,jpg,png,gif,bmp|required|max:10000' // max 10000kb
+          );
+
+          // Now pass the input and rules into the validator
+          $validator = Validator::make($fileArray, $rules);
+
+          // Check to see if validation fails or passes
+          if ($validator->fails())
+          {
+             return response()->json([
+                          "success"=>"false", "mensaje"=>'Debe de seleccionar un archivo de tipo imagen que cumpla con lo siguiente: archivo de tipo jpeg/gif/png/bmp con un peso m&aacute;ximo de 10000kb'
+                      ], 200);
+          }
+          else
+          {
+
+              $name = $user->nombreUsuario . time() . '.' . $file->getClientOriginalExtension();
+              $path = public_path() . '/images_bills/';
+              $file-> move($path, $name);
+              $factura ->img_PathFactura = '/images_bills/' . $name;
+                  
+              $factura->save();
+
+
+              return response()->json([
+                          "success"=>"true", "mensaje"=>'Se ha enviado la imagen seleccionada correctamente, la factura sera revisada y posteriormente recibiras un correo con mas informaci&oacute;n', "filename" =>  asset(''). '/images_bills/' .$name
+                      ], 200);
+          }
         }
-        //return ($request->all());
-        //return Response::json(["success"=>"true", "algomas"=>'nada']);
-        return response()->json(["success"=>"true", "algomas"=>'nada']);
+
+        return response()->json(["success"=>"true"]);
      }
 
     /*retornar los paquedes paginados 5 en 5

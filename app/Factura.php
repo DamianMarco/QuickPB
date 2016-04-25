@@ -9,7 +9,7 @@ class Factura extends Model
     protected $table = "Facturas";
 
     protected $fillable = [
-	    'img_factura'
+	    'img_PathFactura','paquete_id'
     ];
 
 

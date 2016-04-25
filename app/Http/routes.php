@@ -62,9 +62,9 @@ Route::group(['middleware' => ['web']], function () {
 
 
     ////PAQUETES
-    Route::get('packages/view', [
-        'uses' => 'PaquetesController@view',
-        'as' => 'packages.view'
+    Route::get('packages/packagesview', [
+        'uses' => 'PaquetesController@packagesview',
+        'as' => 'packages.packagesview'
     ]);
 
 
@@ -73,10 +73,10 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'PaquetesController@storeimage',
         'as' => 'packages.storeimage'
     ]);
-
+/*
     Route::get('packages/storeimage', function() {
-      return View::make('admin.packages.view');
-    });
+      return View::make('admin.packages.packagesview');
+    });*/
 
     Route::post('test',['middleware' => 'cors'], function()
     {
