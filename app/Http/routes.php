@@ -37,6 +37,16 @@ Route::group(['middleware' => ['web']], function () {
      return view('welcome');
     });
 
+    Route::get('/us', function () {
+    //echo "la direccion show";
+     return view('us');
+    });
+
+    Route::get('/services', function () {
+    //echo "la direccion show";
+     return view('services');
+    });
+
      Route::get('mailsee', function () {
     //echo "la direccion show";
      return view('emails/bienvenido');

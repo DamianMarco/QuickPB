@@ -25,7 +25,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-group"></i> Nosotros <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><i class="fa fa-thumb-tack"></i> Ubicación</a></li>
+              <li><a href={{URL::to('/us')}}><i class="fa fa-thumb-tack"></i> Quienes somos</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="#"><i class="fa fa-btn fa-envelope"></i> Contacto</a></li>
             </ul>
@@ -33,7 +33,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-tasks"></i> Servicios <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#"><i class="fa fa-shopping-cart"></i> Tienda</a></li>
+              <li><a href={{URL::to('/services')}}><i class="fa fa-briefcase"></i> Ofrecemos</a></li>
               <li><a href="#"><i class="fa fa-shopping-bag"></i> Tipos de membresías</a></li>
             </ul>
           </li>
