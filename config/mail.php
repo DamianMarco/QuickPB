@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'marcoh.cepeda@gmail.com', 'name' => 'the extrange guy in your windows'],
+    'from' => ['address' => 'contacto@quickpobox.com', 'name' => 'Contacto quickpobox'],
 
     /*
     |--------------------------------------------------------------------------
@@ -107,5 +107,6 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+    //'G:\xampp\sendmail\sendmail.exe -t',
 
 ];
