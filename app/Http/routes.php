@@ -38,14 +38,21 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     Route::get('/us', function () {
-    //echo "la direccion show";
      return view('us');
     });
 
     Route::get('/services', function () {
-    //echo "la direccion show";
      return view('services');
     });
+
+    Route::get('/contact', function () {
+     return view('contact');
+    });
+
+    Route::post('contact/send', [
+        'uses' => 'ContactoController@emailTo',
+        'as' => 'contact.send'
+    ]);
 
      Route::get('mailsee', function () {
     //echo "la direccion show";
