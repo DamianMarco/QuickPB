@@ -129,6 +129,7 @@ class UsuarioController extends Controller
     {
         $params = $request->all();        
 
+        $sort = (isset($params['sort']))?$params['sort']:array();
         $rowCount = (isset($params['rowCount']))?$params['rowCount']:10;
         $current = (isset($params['current']))?$params['current']:1;
         $searchPhrase = (isset($params['searchPhrase'])) ? $params['searchPhrase'] : '';
@@ -136,10 +137,18 @@ class UsuarioController extends Controller
         $take = ($rowCount <> 10) ? $rowCount : 10;
         $skip = ($current > 1) ? $current-1 : 0;
 
-        //dd($rowCount);
-        //->orWhere('name', 'John')
         $users = Usuario::where('id','like', '%'.$searchPhrase.'%')->orWhere('email','like', '%'.$searchPhrase.'%')->orWhere('nombreUsuario','like', '%'.$searchPhrase.'%')->take($take)->skip($skip)->get();
-        //$users = Usuario::all();
+
+        if(count($sort)>0)
+        {
+            $sortBy = array_keys($sort);
+            $direction = $sort[$sortBy[0]];
+            
+            if ($direction=="asc")
+                $users = $users->sortBy($sortBy[0]);
+            else
+                $users = $users->sortByDesc($sortBy[0]);   
+        }
 
         $rows = [];
         foreach($users as $row) {
