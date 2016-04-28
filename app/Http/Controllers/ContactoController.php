@@ -67,8 +67,9 @@ class ContactoController extends Controller
             $data = array( 'name' => $name,  'email' => $email, 'mensaje' => $message);
             //dd($data);        
             $enviado = Mail::send('emails.contacto', $data, function($m) use ($data)
-            {
-                $m->to($data['email'])->subject('Contacto desde QuickPoBox!'); 
+            {   
+                $m->from($data['email'],'Contacto: '.$data['name']);
+                $m->to('contacto@quickpobox.com')->cc('damiancp@hotmail.com')->subject('Contacto desde QuickPoBox!'); 
             });
             
             if ($enviado)

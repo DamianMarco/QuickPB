@@ -48,8 +48,10 @@ class UsuarioController extends Controller
 
                     Auth::login($theUser, (!is_null($request ->remember)? true:false));
                     //Auth::attempt(['id' => $theUser->id,  'password' => $password], true);
-                    //Auth::loginUsingId($theUser->id);
-                     return redirect()->intended('/index');
+                    //Auth::loginUsingId($theUser->id);       
+
+                     //return redirect()->intended('/index');
+                    return redirect('/index');
                 }
         }
 

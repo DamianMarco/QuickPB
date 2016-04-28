@@ -79,6 +79,19 @@ Route::group(['middleware' => ['web']], function () {
 
 
     ////PAQUETES
+
+    Route::get('packages/list', [     
+        'middleware' => 'auth',   
+        'uses' => 'PaquetesController@apiList',
+        'as' => 'packages.list'
+    ]);
+
+    Route::get('packages/view', [     
+        'middleware' => 'auth',   
+        'uses' => 'PaquetesController@view',
+        'as' => 'packages.view'
+    ]);
+    
     Route::get('packages/packagesview', [
         'uses' => 'PaquetesController@packagesview',
         'as' => 'packages.packagesview'

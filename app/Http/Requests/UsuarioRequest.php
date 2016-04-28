@@ -24,9 +24,9 @@ class UsuarioRequest extends Request
     public function rules()
     {
         return [
-            'nombreUsuario'=>'min:6|max:120|required|unique:Usuarios',
+            'nombreUsuario'=>'min:6|max:120|required|unique:usuarios',
             'password' => 'required|min:6|max:20',
-            'email' => 'required|email|unique:Usuarios',
+            'email' => 'required|email|unique:usuarios',
         ];
     }
 }

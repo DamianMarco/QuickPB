@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Factura extends Model
 {
-    protected $table = "Facturas";
+    protected $table = "facturas";
 
     protected $fillable = [
 	    'img_PathFactura','paquete_id'

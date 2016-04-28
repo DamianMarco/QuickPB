@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+//use Request;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\Paquete;
@@ -39,6 +40,70 @@ class PaquetesController extends Controller
         return view('admin.packages.packagesview')->with('packages', $pacs);
      }
 
+     public function view()
+    {            
+
+        $user = Auth::user();
+
+        return view('admin.packages.view');
+    }
+
+     public function apiList(Request $request)
+     {
+        $params = $request->all();        
+
+        $sort = (isset($params['sort']))?$params['sort']:array();
+        $rowCount = (isset($params['rowCount']))?$params['rowCount']:10;
+        $current = (isset($params['current']))?$params['current']:1;
+        $searchPhrase = (isset($params['searchPhrase'])) ? $params['searchPhrase'] : '';
+
+        $take = ($rowCount <> 10) ? $rowCount : 10;
+        $skip = ($current > 1) ? $current-1 : 0;
+
+        $packages = Paquete::where('usuario_id','like', '%'.$searchPhrase.'%')->orWhere('folio','like', '%'.$searchPhrase.'%')->orWhere('contenido','like', '%'.$searchPhrase.'%')->orWhere('observaciones','like', '%'.$searchPhrase.'%')->take($take)->skip($skip)->get();
+
+        if(count($sort)>0)
+        {
+            $sortBy = array_keys($sort);
+            $direction = $sort[$sortBy[0]];
+            
+            if ($direction=="asc")
+                $packages = $packages->sortBy($sortBy[0]);
+            else
+                $packages = $packages->sortByDesc($sortBy[0]);   
+        }
+
+        $rows = [];
+        foreach($packages as $row) {
+     
+            $rows[] = array(
+                'usuario_id' => $row->usuario_id,
+                'folio' => $row->folio,
+                'proveedor'=> $row->proveedor,
+                'alto'=> $row->alto,
+                'ancho'=> $row->ancho,
+                'largo'=> $row->largo,
+                'peso'=> $row->peso,
+                'estatus'=> $row->estatus,
+                'suite'=> $row->suite,
+                'tipoPaquete'=> $row->tipoPaquete,
+                'contenido'=> $row->contenido,
+                'costo'=> $row->costo,
+                'observaciones'=> $row->observaciones,
+                'enviarPaquete'=> $row->enviarPaquete
+            );
+        }
+     
+        $data = array(
+            'current' => $skip,
+            'rowCount' => $take,
+            'rows' => $rows,
+            'total' => count($packages),
+        );
+     
+        return json_encode($data);
+    }
+
      public function storeimage(Request $request)
      {
        if(Request::ajax()) {
@@ -70,9 +135,10 @@ class PaquetesController extends Controller
           }
           else
           {
-
+            
               $name = $user->nombreUsuario . time() . '.' . $file->getClientOriginalExtension();
               $path = public_path() . '/images_bills/';
+              dd($path);
               $file-> move($path, $name);
               $factura ->img_PathFactura = '/images_bills/' . $name;
                   
