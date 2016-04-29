@@ -10,7 +10,7 @@ use Laracasts\Flash\Flash;
 use App\Http\Requests\UsuarioRequest;
 use Auth;
 use Hash;
-
+use Mail;
 
 class UsuarioController extends Controller
 {
@@ -85,9 +85,26 @@ class UsuarioController extends Controller
     {
         $user = new Usuario($request -> all());
         $user->password = bcrypt($user->password);  
-        //dd($request -> all());
+        
         $user -> save();
-        Flash::overlay('Usuario creado correctamente, revise su correo para confirmar el alta! ' . $user->nombreUsuario, 'Usuario creado');
+        
+        $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email);
+
+        $enviado = Mail::send('emails.bienvenido', $data, function($m) use ($data)
+        {                   
+            //$m->from('altas@quickpobox.com','Nuevo usuario: '.$data['name']);
+            $m->to($data['email'])->cc('damiancp@hotmail.com')->subject('Alta Nuevo Usuario QuickPoBox'); 
+        });
+            
+        if ($enviado)
+        {            
+            Flash::overlay('¡ Usuario creado correctamente, revise su correo para obtener más información del alta ! ', 'Usuario creado');            
+        }
+        else
+        {
+
+            Flash::error('Ocurrio un error al mandar correo de registro. ');            
+        }
 
         return redirect()->route('users.create');
     }
