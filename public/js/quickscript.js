@@ -86,7 +86,7 @@ function Error(titulo, datos) {
 
 function beforeSendAjax() {
 
-    var _progressBar = "<div class='progress progress-striped active'><div class='progress-bar progress-bar-success'  role='progressbar' style='width: 100%'>";
+    var _progressBar = "<div class='progress progress-striped active'><div class='progress-bar progress-bar-warning'  role='progressbar' style='width: 100%'>";
 
     var _modal = "<div id='ajax' class='modal fade'><div class='modal-dialog'><div class='modal-content'>" +   
       "<div class='modal-body'><p class='text-center'><strong>Espere un momento por favor...<strong></p><p>" + _progressBar + "</p></div>" +

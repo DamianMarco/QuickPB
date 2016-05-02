@@ -177,6 +177,12 @@ ol li {
 </head>
 
 <body bgcolor="#f6f6f6">
+<div style="background-color: #fd7800; width: 100%; height: 4px; margin: 0px:">   
+  </div>
+  
+  <div id="logo2"><a href="http://www.quickpobox.com/" title="QuickPOBox"><img src="http://www.quickpobox.com/images/logoQPOBox.png" width="120" height="80" /></a>
+  </div><!--logo end-->
+
 @yield('content')
 @extends('emails.footer')
 </body>

@@ -1,11 +1,6 @@
 @extends('emails.header')
 
 @section('content')
-	<div style="background-color: #fd7800; width: 100%; height: 4px; margin: 0px:">		
-	</div>
-	
-	<div id="logo2"><a href="http://www.quickpobox.com/" title="QuickPOBox"><img src="http://www.quickpobox.com/images/logoQPOBox.png" /></a>
-	</div><!--logo end-->
 		<br/>  
 	
 	<div class="contenido">

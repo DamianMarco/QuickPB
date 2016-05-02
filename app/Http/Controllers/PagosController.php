@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
 use App\Usuario;
 use App\Direccion;
+use App\Paquete;
 use App\Pago;
 use Conekta;
 use Conekta_Charge;
@@ -25,9 +26,21 @@ class PagosController extends Controller
     public function view()
      {        
         //$user = Auth::user();
-        
-      
+       
         return view('admin.pays.pagos');
+     }
+
+     public function madepayment(Request $request)
+     {        
+        //$user = Auth::user();
+         $data = $request->all();
+         if(isset($data["id_paquete"]))
+          $idPaquete = $data["id_paquete"];
+         else
+          $idPaquete= 0;
+        $elPaquete = Paquete::where('id', $idPaquete)->first();
+
+        return view('admin.pays.pagos')->with('paquete',$elPaquete);
      }
 
     public function payment(Request $request) 

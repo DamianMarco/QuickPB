@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'contacto@quickpobox.com', 'name' => 'Contacto quickpobox'],
+    'from' => ['address' => 'notificaciones@quickpobox.com', 'name' => 'Notificaciones Quickpobox'],
 
     /*
     |--------------------------------------------------------------------------

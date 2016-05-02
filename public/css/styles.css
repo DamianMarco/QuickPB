@@ -30,6 +30,15 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 /* General */
 /*////////////////////////////////////////////////////////////////////////////////////////////*/
 
+.divRound{
+	-webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+	border-radius: 50% !important;
+	width: 15px !important;
+	height:15px !important;
+	border: 1px solid #000 !important;
+}
+
 
 /* navbar COLOR Change*/
 .navbar-default {

@@ -151,11 +151,15 @@ Route::group(['middleware' => ['web']], function () {
         //Route::resource('users','UsuarioController');
     
     ///PAGOS - CONEKTA
-        Route::get('pays/pagos', [
+    Route::get('pays/pagos', [
         'uses' => 'PagosController@view',
         'as' => 'pays.pagos'
     ]);
-
+   
+    Route::post('pays/madepayment', [
+        'uses' => 'PagosController@madepayment',
+        'as' => 'pays.realizapago'
+    ]);
 
     ///PAGOS - EVENTO
     Route::post('pays/payment', [

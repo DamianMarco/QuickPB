@@ -8,18 +8,25 @@
   <!-- Default panel contents -->
   <div class="panel-heading"><h3 class="panel-title">Mis Paquetes</h3></div>
   <div class="panel-body">
-    <div class="alert" role="alert">
+    <div class="alert" role="alert" >
+
+		<div class="pull-right">
+	  		<table class="table table-condensed table-bordered">
+	  		<tr class="active" ><th colspan="2"><strong>Estatus de los paquetes</strong></th> </tr>
+	  			<tr><td >Recibido</td><td class="info">En Cotizaci&oacute;n</td></tr>
+	  			<tr><td class="warning"><i class="fa fa-send" aria-hidden="true"></i> Enviado</td><td class="success">Entregado</td></tr>
+				</table>
+		</div>
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
   		<span>Articulos con un peso de mas de 5 Kilos o peso volumétrico llevan un cargo extra, pregunta por nuestros costos de sobrepeso.</span>
 	</div>
-  
 
   <!-- Table -->
-	<table class="table table-hover table-bordered table-condensed"> 
+	<table class="table table-hover table-condensed"> 
 		<thead> 
 			<tr> 
 				<th>Socio</th> 
-				<th>Estatus</th> 
+				<th>Ubicaci&oacute;n</th> 
 				<th>Folio</th> 
 				<th>Proveedor</th> 
 				<th>Ver Detalle</th>
@@ -28,12 +35,16 @@
 				<th>Total a Pagar</th> 
 				<th>Factura</th>  
 				<th>Pagar</th>  
-				<th>Importar</th>  
+				  
 			</tr> 
 		</thead> 
 		<tbody> 
-		@foreach($packages as $pack )
-			<tr> 
+		@foreach( $packages as $pack )
+			<tr id="{{ $pack->id. 'tr'}}"  
+				@if ($pack->enviarPaquete == "enCotizacion")
+					class="info"
+				@endif
+			> 
 			<th>{{$pack->Usuario->nombreUsuario}}</th> 
 			<td>{{$pack->estatus}}</td> 
 			<td>{{$pack->folio}}</td>
@@ -61,8 +72,18 @@
 				<button type="button" class="btn btn-warning" id="{{ $pack->id . 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset($pack->factura->img_PathFactura)}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Factura</button>
 			@endif
 			</td>
-			<td><button type="button" class="btn btn-danger"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button></td>
-			<td><button type="button" class="btn btn-success"><i class="fa fa-send" aria-hidden="true"></i> Importar</button></td>
+			<td>
+				@if ($pack->enviarPaquete != "Cotizada")
+					<button type="button" class="btn btn-danger" disabled="disabled"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button>
+				@else
+				{!! Form::open(['route'=> 'pays.realizapago',  'method' => 'POST']) !!}
+					{!! Form::hidden('id', $pack->id) !!}
+					<button type="submit" class="btn btn-danger"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button>
+					 {!! Form::close() !!}
+				@endif
+			
+			</td>
+			
 			</tr>
 		@endforeach
 		</tbody> 
@@ -200,7 +221,8 @@
            	jQuery("#facturaimg").attr("src", info.filename);
 			jQuery("#afacturaimg").attr("href", info.filename)
 			valIdPac = jQuery("#paquete_id").val();
-           	jQuery("#" + valIdPac +"modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
+			jQuery("#" + valIdPac + "tr").addClass("info");
+           	jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
    		  }
        else
        		MessageWarning("Aviso", info.mensaje);

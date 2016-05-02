@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Validator;
-
+use File;
 
 class PaquetesController extends Controller
 {
@@ -102,14 +102,14 @@ class PaquetesController extends Controller
         );
      
         return json_encode($data);
-    }
+     }
 
      public function storeimage(Request $request)
      {
-       if(Request::ajax()) {
+       if($request->ajax()) {
           $user = Auth::user();
           $factura = new Factura();
-          $data = Request::all();
+          $data = $request->all();
 
           $factura->paquete_id = $data['paquete_id'];  
                 
@@ -138,11 +138,42 @@ class PaquetesController extends Controller
             
               $name = $user->nombreUsuario . time() . '.' . $file->getClientOriginalExtension();
               $path = public_path() . '/images_bills/';
-              dd($path);
+              //dd($path);
               $file-> move($path, $name);
               $factura ->img_PathFactura = '/images_bills/' . $name;
-                  
-              $factura->save();
+
+              $facturaEnBD = Factura::where('paquete_id', $factura->paquete_id)->first();
+              $miPaquete = Paquete::where('id', $factura->paquete_id)->first();
+
+              $data = array( 'name' => $user->nombreUsuario,  'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'pathFile' => public_path() . $factura->img_PathFactura);
+
+              if (is_null($facturaEnBD))
+              {  
+                $factura->save();
+                $miPaquete->enviarPaquete = 'enCotizacion';
+                $miPaquete->save();
+                 Mail::queue('emails.enviofactura', $data, function($message) use ($data)
+                 {                   
+                  //psw:f4cturas_2020
+                    $message->to('facturas@quickpobox.com')->cc('mh_cepeda@hotmail.com')->subject('Nueva Factura de Paquetes');
+                    $message->attach($data['pathFile']);
+                 });
+              }
+              else
+              {
+                if(File::exists(public_path() . $facturaEnBD ->img_PathFactura))
+                   File::delete(public_path() . $facturaEnBD ->img_PathFactura );
+                $facturaEnBD->img_PathFactura = $factura->img_PathFactura;
+                $facturaEnBD->save();
+
+                Mail::queue('emails.enviofactura', $data, function($message) use ($data)
+                {                   
+                  //psw:f4cturas_2020
+                    $message->to('facturas@quickpobox.com')->bcc('mh_cepeda@hotmail.com')->subject('cambio de Factura en Paquetes');
+                    $message->attach($data['pathFile']);
+                });
+              }
+
 
 
               return response()->json([
