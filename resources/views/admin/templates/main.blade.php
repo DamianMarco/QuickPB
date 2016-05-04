@@ -3,6 +3,7 @@
 <html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js" lang="es-MX">
 <head>
 <meta name="_token" content="{!! csrf_token() !!}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <div class="fit-vids-style">&shy;
 <style>               
 	.fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }
