@@ -49,6 +49,26 @@ Route::group(['middleware' => ['web']], function () {
      return view('contact');
     });
 
+    Route::get('/termofuse', function () {
+     return view('termofuse');
+    });
+
+    Route::get('/sends', function () {
+     return view('sends');
+    });
+
+    Route::get('/location', function () {
+     return view('location');
+    });
+
+    Route::get('/faq', function () {
+     return view('faq');
+    });    
+
+    Route::get('/informationprotection', function () {
+     return view('informationprotection');
+    });
+
     Route::post('contact/send', [
         'uses' => 'ContactoController@emailTo',
         'as' => 'contact.send'

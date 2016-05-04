@@ -7,8 +7,8 @@
 			<div id="footer-bar1" class="four columns">
 					<ul class="xoxo">
 						<li id="text-2" class="widget-container widget_text"><h3 class="widget-title">QuickPoBox</h3>			<div class="textwidget"><ul>
-<li><a href="http://www.quickpobox.com/nosotros/">Nosotros</a> </li>
-<li><a href="http://www.quickpobox.com/ubicacion/nosotros/">Ubicación</a></li>
+<li><a href="{{URL::to('/us')}}">Nosotros</a> </li>
+<li><a href="{{URL::to('/location')}}">Ubicación</a></li>
 </ul></div>
 		</li>					</ul>
 					
@@ -20,9 +20,9 @@
 <div id="footer-bar2" class="four columns">
 					<ul class="xoxo">
 						<li id="text-3" class="widget-container widget_text"><h3 class="widget-title">Información</h3>			<div class="textwidget"><ul>
-<li><a href="http://www.quickpobox.com/preguntas-frecuentes/">Preguntas frecuentes</a></li>
-<li><a href="http://www.quickpobox.com/envios/">Envios</a></li>
-<li><a href="http://www.quickpobox.com/contacto/">Contacto</a></li>
+<li><a href="{{URL::to('/faq')}}">Preguntas frecuentes</a></li>
+<li><a href="{{URL::to('/services')}}">Servicios</a></li>
+<li><a href="{{URL::to('/contact')}}">Contacto</a></li>
 </ul>
 </div>
 		</li>					</ul>
@@ -31,8 +31,8 @@
 
 <div id="footer-bar3" class="four columns">
 					<ul class="xoxo">
-						<li id="text-4" class="widget-container widget_text"><h3 class="widget-title">Politicas</h3>			<div class="textwidget"><p><a href="http://www.quickpobox.com/condiciones-de-uso/">Condiciones de uso</a></p>
-<a href="http://www.quickpobox.com/proteccion-de-la-informacion/">Protección de la información</a>
+						<li id="text-4" class="widget-container widget_text"><h3 class="widget-title">Politicas</h3>			<div class="textwidget"><p><a href="{{URL::to('/termofuse')}}">Condiciones de uso</a></p>
+<a href="{{URL::to('/informationprotection')}}">Protección de la información</a>
 </div>
 		</li>					</ul>
 					

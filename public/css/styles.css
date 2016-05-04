@@ -39,6 +39,8 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 	border: 1px solid #000 !important;
 }
 
+ #map-container { height: 300px }
+
 .degradadoAzul
 {
 	background: rgba(248,80,50,1);
