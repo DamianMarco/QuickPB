@@ -13,8 +13,9 @@
 		<div class="pull-right">
 	  		<table class="table table-condensed table-bordered">
 	  		<tr class="active" ><th colspan="2"><strong>Estatus de los paquetes</strong></th> </tr>
-	  			<tr><td >Recibido</td><td class="info">En Cotizaci&oacute;n</td></tr>
-	  			<tr><td class="warning"><i class="fa fa-send" aria-hidden="true"></i> Enviado</td><td class="success">Entregado</td></tr>
+	  			<tr><td >Recibido</td><td class="info">$ En Cotizaci&oacute;n</td></tr>
+	  			<tr><td class="danger"> $ Cotizado</td><td class="warning"><i class="fa fa-send" aria-hidden="true"></i> Enviado</td></tr>
+	  			<tr class="success" ><th colspan="2"><strong>Entregado</strong></th> </tr>
 				</table>
 		</div>
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
@@ -34,7 +35,9 @@
 				<th>Comentarios</th> 
 				<th>Total a Pagar</th> 
 				<th>Factura</th>  
+				@if (Auth::user()->rol == "cliente")
 				<th>Pagar</th>  
+				@endif
 				  
 			</tr> 
 		</thead> 
@@ -43,6 +46,10 @@
 			<tr id="{{ $pack->id. 'tr'}}"  
 				@if ($pack->enviarPaquete == "enCotizacion")
 					class="info"
+				@elseif ($pack->enviarPaquete == "Cotizada")
+					class="danger"
+				@elseif ($pack->enviarPaquete == "Aceptada")
+					class="danger"
 				@endif
 			> 
 			<th>{{$pack->Usuario->nombreUsuario}}</th> 
@@ -72,6 +79,7 @@
 				<button type="button" class="btn btn-warning" id="{{ $pack->id . 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset($pack->factura->img_PathFactura)}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Factura</button>
 			@endif
 			</td>
+			@if (Auth::user()->rol == "cliente")
 			<td>
 				@if ($pack->enviarPaquete != "Cotizada")
 					<button type="button" class="btn btn-danger" disabled="disabled"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button>
@@ -83,7 +91,7 @@
 				@endif
 			
 			</td>
-			
+			@endif
 			</tr>
 		@endforeach
 		</tbody> 
@@ -145,7 +153,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="gridSystemModalLabel">Quieres recibir tu paquete en casa? sube la imagen de la factura!</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel">
+
+@if (Auth::user()->rol == "cliente")
+        Quieres recibir tu paquete en casa? sube la imagen de la factura!
+@else
+	 Imagen que el usuario agrego.
+@endif
+        </h4>
       </div>
       <div class="modal-body">
         {!! Form::open(['route'=> 'packages.storeimage', 'method' => 'PUT', 'id'=>'upload-doc','files'=>true ]) !!}
@@ -159,6 +174,8 @@
 		      </a>
 			</div>	
 
+
+      		@if (Auth::user()->rol == "cliente")
 				<div class="form-group"> 
 		 			<label for="recipient-name" class="control-label">Seleccionar imagen de la factura:</label> 
 		 			{!! Form::file('fileupload', ['id'=>'fileupload', 'onchange'=>"this.parentNode.nextSibling.value = this.value" ], null) !!} 
@@ -167,7 +184,7 @@
 				<div class="well center-block" style="max-width:400px"> 
 					<button type="submit"  class="btn btn-primary btn-lg btn-block"><i class="fa fa-send" aria-hidden="true"></i> Enviar Factura</button> 
 				</div>
-				
+			@endif
 	 		</div> 
 
  		{!! Form::close() !!}

@@ -50,7 +50,7 @@ function MensajeImage(titulo, mensaje) {
     jQuery('#mjs').modal('show');
 }
 
-function MessageWarningImage(title, data) {
+function MessageWarning(title, data) {
     var _modal = "<div id='info' class='modal fade'><div class='modal-dialog'><div class='modal-content'>" +
       "<div class='modal-header bg-warning'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button> " +
       "<h4 class='modal-title'><i class='fa fa-exclamation-triangle' ></i> <strong> " + title + "</strong></h4></div>" +

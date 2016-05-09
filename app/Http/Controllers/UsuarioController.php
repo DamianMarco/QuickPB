@@ -34,8 +34,7 @@ class UsuarioController extends Controller
 
         if (strpos($user->nombreUsuario, '@') !== false){
 
-            $theUser = Usuario::where('estatus', 'activo')
-                        ->where('email', $user->nombreUsuario)->first(); 
+            $theUser = Usuario::where('email', $user->nombreUsuario)->first(); 
         }
         else{
             $theUser = Usuario::where('estatus', 'activo')
@@ -43,16 +42,25 @@ class UsuarioController extends Controller
         }
         if (!is_null($theUser))
         {
-            if (Hash::check($user->password, $theUser->password))
-                {
+            if($theUser->estatus =='activo')
+            {
+                if (Hash::check($user->password, $theUser->password))
+                    {
 
-                    Auth::login($theUser, (!is_null($request ->remember)? true:false));
-                    //Auth::attempt(['id' => $theUser->id,  'password' => $password], true);
-                    //Auth::loginUsingId($theUser->id);       
+                        Auth::login($theUser, (!is_null($request ->remember)? true:false));
+                        //Auth::attempt(['id' => $theUser->id,  'password' => $password], true);
+                        //Auth::loginUsingId($theUser->id);       
 
-                     //return redirect()->intended('/index');
-                    return redirect('/index');
-                }
+                         //return redirect()->intended('/index');
+                        return redirect('/index');
+                    }
+            }
+            else
+            {
+                Flash::error('Su usuario no se encuentra activo.');
+                return view('admin.users.create');
+            }
+
         }
 
         Flash::error('Usuario o contrasena incorrectos, favor de verificar');
@@ -85,7 +93,7 @@ class UsuarioController extends Controller
     {
         $user = new Usuario($request -> all());
         $user->password = bcrypt($user->password);  
-        
+
         $user -> save();
         
         $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email);

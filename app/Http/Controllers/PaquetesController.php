@@ -10,6 +10,7 @@ use Auth;
 use App\Paquete;
 use App\Usuario;
 use App\Factura;
+use App\Direccion;
 use App\Http\Requests\PaqueteRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
@@ -30,7 +31,12 @@ class PaquetesController extends Controller
      	//$pacs = DB::table('paquetes')->where('usuario_id', $id)->get(); //App\Paquetes::where('usuario_id', $id)->get();
         $user = Auth::user();
 
-    		$pacs = Paquete::where('usuario_id', $user->id)->orderBy('id','ASC')->paginate(5);
+        if($user->tipo == 'admin')
+    		    $pacs = Paquete::orderBy('updated_at','DESC')->paginate(5);
+        else
+            $pacs = Paquete::where('usuario_id', $user->id)->orderBy('updated_at','DESC')->paginate(5);
+        
+
     		$pacs->each(function($pacs){
     			$pacs -> usuario;
           $pacs -> factura;
@@ -115,6 +121,28 @@ class PaquetesController extends Controller
                 
           $file = $data['userfile'];
 
+          $user->direccion;
+
+
+          if(is_null($user->direccion))
+          {
+             return response()->json([
+                          "success"=>"false", "mensaje"=>'Debe de dar de alta su direccion de <strong>Facturaci&oacute;n</strong> como la direcci&oacute;n donde <strong>reciba su paquete</strong>.'
+                      ], 200);
+          }
+          else
+          {
+            $dirFactura = Direccion::where('usuario_id',$user->id)->where('tipo','facturacion')->first();
+            $dircasa = Direccion::where('usuario_id',$user->id)->where('tipo','envio')->first();
+
+              if(is_null($dirFactura) || is_null($dircasa))
+              {
+                 return response()->json([
+                          "success"=>"false", "mensaje"=>'Debe de dar de alta su direccion de <strong>Facturaci&oacute;n</strong> como la direcci&oacute;n donde <strong>reciba su paquete</strong>.'
+                      ], 200);  
+              }
+          }
+        
           // Build the input for validation
           $fileArray = array('image' => $file);
 
@@ -145,17 +173,25 @@ class PaquetesController extends Controller
               $facturaEnBD = Factura::where('paquete_id', $factura->paquete_id)->first();
               $miPaquete = Paquete::where('id', $factura->paquete_id)->first();
 
-              $data = array( 'name' => $user->nombreUsuario,  'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'pathFile' => public_path() . $factura->img_PathFactura);
+              $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'pathFile' => public_path() . $factura->img_PathFactura);
 
               if (is_null($facturaEnBD))
               {  
                 $factura->save();
                 $miPaquete->enviarPaquete = 'enCotizacion';
+                $miPaquete->updated_at = date('Y-m-d H:i:s');
                 $miPaquete->save();
                  Mail::queue('emails.enviofactura', $data, function($message) use ($data)
                  {                   
                   //psw:f4cturas_2020
-                    $message->to('facturas@quickpobox.com')->cc('mh_cepeda@hotmail.com')->subject('Nueva Factura de Paquetes');
+                    $message->to('facturas@quickpobox.com')->subject('Nueva Factura de Paquetes');
+                    $message->attach($data['pathFile']);
+                 });
+
+                  Mail::queue('emails.enviofacturatouser', $data, function($message) use ($data)
+                 {                   
+                  //psw:f4cturas_2020
+                    $message->to($data['correoUsuario'])->subject('Nueva Factura de Paquetes');
                     $message->attach($data['pathFile']);
                  });
               }
@@ -165,11 +201,19 @@ class PaquetesController extends Controller
                    File::delete(public_path() . $facturaEnBD ->img_PathFactura );
                 $facturaEnBD->img_PathFactura = $factura->img_PathFactura;
                 $facturaEnBD->save();
+                $miPaquete->updated_at = date('Y-m-d H:i:s');
+                $miPaquete->save();
 
                 Mail::queue('emails.enviofactura', $data, function($message) use ($data)
                 {                   
                   //psw:f4cturas_2020
-                    $message->to('facturas@quickpobox.com')->bcc('mh_cepeda@hotmail.com')->subject('cambio de Factura en Paquetes');
+                    $message->to('facturas@quickpobox.com')->subject('cambio de Factura en Paquetes');
+                    $message->attach($data['pathFile']);
+                });
+                Mail::queue('emails.enviofacturatouser', $data, function($message) use ($data)
+                {                   
+                  //psw:f4cturas_2020
+                    $message->to($data['correoUsuario'])->subject('has cambiado de Factura de tu paquete');
                     $message->attach($data['pathFile']);
                 });
               }
