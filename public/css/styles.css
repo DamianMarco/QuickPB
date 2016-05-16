@@ -29,6 +29,10 @@ License URI: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 /* General */
 /*////////////////////////////////////////////////////////////////////////////////////////////*/
+table{
+margin-bottom: 0px !important;
+
+}
 
 .divRound{
 	-webkit-border-radius: 50% !important;

@@ -10,22 +10,25 @@
   <div class="panel-body">
     <div class="alert" role="alert" >
 
-		<div class="pull-right">
-	  		<table class="table table-condensed table-bordered">
-	  		<tr class="active" ><th colspan="2"><strong>Estatus de los paquetes</strong></th> </tr>
-	  			<tr><td >Recibido</td><td class="info">$ En Cotizaci&oacute;n</td></tr>
-	  			<tr><td class="danger"> $ Cotizado</td><td class="warning"><i class="fa fa-send" aria-hidden="true"></i> Enviado</td></tr>
-	  			<tr class="success" ><th colspan="2"><strong>Entregado</strong></th> </tr>
-				</table>
-		</div>
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
   		<span>Articulos con un peso de mas de 5 Kilos o peso volumétrico llevan un cargo extra, pregunta por nuestros costos de sobrepeso.</span>
+<br/><br/>
+<div style=" width: 70%;">
+	<table class="table table-condensed table-bordered">
+	  		<tr class="active" ><th colspan="6"><strong>Estatus de los paquetes</strong></th> </tr>
+	  			<tr><td >Recibido</td><td class="info">$ En Cotizaci&oacute;n</td>
+	  			<td class="danger"> $ Cotizado</td><td class="warning"><i class="fa fa-send" aria-hidden="true"></i> Enviado</td>
+	  			<th colspan="2" class="success"><strong>Entregado</strong></th> </tr>
+				</table>
 	</div>
-
+	</div>
   <!-- Table -->
 	<table class="table table-hover table-condensed"> 
 		<thead> 
 			<tr> 
+				@if (Auth::user()->rol != "cliente")
+					<th>Suite</th>  
+				@endif
 				<th>Socio</th> 
 				<th>Ubicaci&oacute;n</th> 
 				<th>Folio</th> 
@@ -48,10 +51,15 @@
 					class="info"
 				@elseif ($pack->enviarPaquete == "Cotizada")
 					class="danger"
+				@elseif ($pack->estatus == "enCurso" || $pack->estatus == "enTuCiudad" || $pack->estatus == "enEntrega")
+					class="warning"
 				@elseif ($pack->enviarPaquete == "Aceptada")
-					class="danger"
+					class="success"
 				@endif
 			> 
+			@if (Auth::user()->rol != "cliente")
+				<th>{{$pack->Usuario->id}}</th>  
+			@endif
 			<th>{{$pack->Usuario->nombreUsuario}}</th> 
 			<td>{{$pack->estatus}}</td> 
 			<td>{{$pack->folio}}</td>
@@ -202,7 +210,6 @@
 @endsection
 
 @section('misScripts')
-
 <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
 
@@ -256,7 +263,7 @@
 
 
 		jQuery("#upload-doc").submit(function(e){
-					 e.preventDefault();
+				 e.preventDefault();
 
 				var formData = new FormData();
 			   fileInputElement= jQuery('#fileupload');

@@ -20,7 +20,13 @@
 		<!-- panel facturacion -->
 		<div class="panel panel-default">  		
 			<!-- Default panel contents -->
-			<div class="panel-heading">Recepción de Paquete</div>
+			<div class="panel-heading">
+			@if(isset($isEdit))
+				 Editar Paquetes	
+			@else
+				Recepción de Paquete
+			@endif
+			</div>
 			<div class="panel-body">
 						
 			@if(!is_null($paquete))			
@@ -160,7 +166,17 @@
 			  </div-->			  
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
-			      <button type="submit" class="btn btn-default"><i class="fa fa-paper-plane" aria-hidden="true"></i> Asignar</button>
+				@if(isset($isEdit))
+				 <div class="well center-block" style="max-width:400px"> 
+					<button type="submit"  class="btn btn-warning btn-lg btn-block"><i class="fa fa-floppy-o" aria-hidden="true"></i> Actualizar</button> 
+				</div>
+				@else
+				<div class="well center-block" style="max-width:400px"> 
+					<button type="submit"  class="btn btn-warning btn-lg btn-block"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Asignar</button> 
+				</div>
+				@endif		
+
+			     
 			    </div>
 			  </div>	
 			  					  

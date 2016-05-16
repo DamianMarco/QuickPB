@@ -34,8 +34,9 @@ class PagosController extends Controller
      {        
         //$user = Auth::user();
          $data = $request->all();
-         if(isset($data["id_paquete"]))
-          $idPaquete = $data["id_paquete"];
+           
+         if(isset($data["id"]))
+          $idPaquete = $data["id"];
          else
           $idPaquete= 0;
         $elPaquete = Paquete::where('id', $idPaquete)->first();
@@ -48,10 +49,11 @@ class PagosController extends Controller
     	//dd($request->all());
     	
         $cargo = $request->all();
-
+       
         $user = Auth::user();      
         $billing_address = Direccion::where('usuario_id', $user->id)->where('tipo','facturacion')->first();
-
+        $miPaquete = Paquete::where('id', $cargo["id_paquete"])->where('usuario_id', $user->id)->first();
+       
         if(is_null($billing_address))
         {
 
@@ -59,15 +61,22 @@ class PagosController extends Controller
             return view('admin.pays.pagos');
         }
 
+        if(is_null($miPaquete))
+        {
+
+          Flash::overlay("No se encontro informacion del paquete a pagar", 'Error',2);
+            return view('admin.pays.pagos');
+        }        
+
         //Clave privada
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
         try 
         {
             $charge = Conekta_Charge::create(array(
-                  'description'=> 'Stogies',
-                  'reference_id'=> '9839-wolf_pack',
-                  'amount'=> 20000,
+                  'description'=> $miPaquete->contenido,
+                  'reference_id'=> $miPaquete->id,
+                  'amount'=> $miPaquete->costo,
                   'currency'=>'MXN',
                   'card'=> 'tok_test_visa_4242', // $_POST['conektaTokenId']
                   'details'=> array(
@@ -84,12 +93,12 @@ class PagosController extends Controller
                     ),
                     'line_items'=> array(
                       array(
-                        'name'=> 'ENVIO DE PAQUETE',
-                        'description'=> 'PAQUETE RECIBIDO #20102.',
-                        'unit_price'=> 20000,
+                        'name'=> 'COBRO DE PAQUETE',
+                        'description'=>  $miPaquete->contenido,
+                        'unit_price'=> $miPaquete->costo,
                         'quantity'=> 1,
                         'sku'=> 'cohb_s1',
-                        'category'=> 'package'
+                        'category'=>  $miPaquete->tipopaquete //'package'
                       )
                     ),
                     'billing_address'=> array(
@@ -107,11 +116,13 @@ class PagosController extends Controller
                     )
                   )
                 ));
-
+           
             //echo $charge->status;
         } 
         catch (Conekta_Error $e) 
         {
+           dd($e);
+
         	  Flash::overlay($e->getMessage(), 'Error',2);
          	  return view('admin.pays.pagos');
         	 
@@ -120,11 +131,24 @@ class PagosController extends Controller
 
         $metodoPago = $charge->payment_method;
 
+          $miPaquete->enviarPaquete ="Aceptada";
+          $miPaquete->save();
+        
+         $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'contenido' => $miPaquete->contenido, 'costo' => $miPaquete->costo, 'authcode' => $metodoPago->auth_code);
+
+         Mail::queue('emails.paquetecotizado', $data, function($message) use ($data)
+          {                   
+            //psw:f4cturas_2020
+            $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Pagado!!');
+          });
+
+        $metodoPago = $charge->payment_method;
+
         //dd($charge);
 // Se almacena la informacion del pago
         $nuevoPago = new Pago();
         $nuevoPago ->usuario_id=$user->id;
-        $nuevoPago ->paquete_id=0;
+        $nuevoPago ->paquete_id=$miPaquete->id;
 
         $nuevoPago ->referencia=$charge->reference_id;
         $nuevoPago ->descripcion=$charge->description;

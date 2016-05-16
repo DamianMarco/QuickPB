@@ -122,7 +122,14 @@ class PaquetesController extends Controller
           $file = $data['userfile'];
 
           $user->direccion;
+          $miPaquete = Paquete::where('id', $factura->paquete_id)->first();
 
+          if($miPaquete->enviarPaquete != "enEspera" && $miPaquete->enviarPaquete != "enCotizacion")
+          {
+              return response()->json([
+                      "success"=>"false", "mensaje"=>'Ya <strong>No</strong> puedes actualizar tu factura.'
+                  ], 200);
+          }
 
           if(is_null($user->direccion))
           {
@@ -171,7 +178,7 @@ class PaquetesController extends Controller
               $factura ->img_PathFactura = '/images_bills/' . $name;
 
               $facturaEnBD = Factura::where('paquete_id', $factura->paquete_id)->first();
-              $miPaquete = Paquete::where('id', $factura->paquete_id)->first();
+            
 
               $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'pathFile' => public_path() . $factura->img_PathFactura);
 
@@ -253,14 +260,18 @@ class PaquetesController extends Controller
         $user = Auth::user();        
 
         $paquete = new Paquete($request -> all());
-
-        //dd($paquete);
-
-        $asignarA = Usuario::where('id', $paquete->usuario_id)->first();
-        
-        //dd($asignarA->nombreUsuario);               
-                    
+        $asignarA = Usuario::where('id', $paquete->usuario_id)->first();                    
         $paquete->save();
+
+        $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones);
+
+           Mail::queue('emails.paqueteasignado', $data, function($message) use ($data)
+            {                   
+              //psw:f4cturas_2020
+              //$message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!'); 
+              $message->to($data['correoUsuario'])->subject('Paquete Recibido!!');
+            });
+
 
         Flash::overlay('El paquete '.$paquete->folio.' ha sido asignado a '.$asignarA->nombreUsuario,'Paquete asignado');
         
@@ -276,8 +287,12 @@ class PaquetesController extends Controller
         $paquete = Paquete::where('id', $id)->first();;
 
         //dd($paquete);        
+
+         $data=array(
+        'paquete'=>$paquete, 'isEdit'=> true
+        );
                 
-        return view('admin.packages.create')->with('paquete',$paquete);        
+        return view('admin.packages.create')->with($data);        
     }
 
 
@@ -287,13 +302,49 @@ class PaquetesController extends Controller
 
         //dd($input);
 
-        $paquete = Paquete::findOrFail($input["id"]);        
+        $paquete = Paquete::findOrFail($input["id"]);       
 
-        //dd($paquete);
+        if( $paquete->enviarPaquete =="enCotizacion" &&  $input["costo"] != $paquete->costo )
+        {
+          $paquete->fill($input);
+          $paquete->enviarPaquete = "Cotizada";
+          $paquete->save();
+          $user =  $paquete->Usuario;
 
-        $paquete->fill($input)->save();
+          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'costo' => $paquete->costo);
 
-         Flash::overlay('El paquete '.$paquete->folio.' ha sido actualizado','Paquete actualizado');
+           Mail::queue('emails.paquetecotizado', $data, function($message) use ($data)
+            {                   
+              //psw:f4cturas_2020
+              //$message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!'); 
+              $message->to($data['correoUsuario'])->subject('Paquete Cotizado!!');
+            });
+
+        }
+        elseif($paquete->estatus !=$input["estatus"])
+        {
+
+          $paquete->fill($input);
+          $paquete->enviarPaquete = "Cotizada";
+          $paquete->save();
+          $user =  $paquete->Usuario;
+
+          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => $paquete->estatus);
+
+           Mail::queue('emails.paqueteubicacion', $data, function($message) use ($data)
+            {                   
+              //psw:f4cturas_2020
+              //$message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!'); 
+              $message->to($data['correoUsuario'])->subject('Paquete cambio de ubicacion');
+            });
+
+        }
+        else
+        {
+          $paquete->fill($input)->save();
+        }
+
+        Flash::overlay('El paquete '.$paquete->folio.' ha sido actualizado','Paquete actualizado');
 
         return redirect()->back();
     }
