@@ -17,6 +17,8 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/fontawesome_4_5_0/css/font-awesome.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap3_3_6/css/bootstrap-switch.min.css')}}">
+
 	<script type="text/javascript" src="{{asset('css/wpthemes/js/discover/wp-emoji-release.min.js?ver=4.4.2')}}"></script>
 	<style type="text/css">
 		img.wp-smiley,

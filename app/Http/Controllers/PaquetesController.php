@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use Request;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use Auth;
 use App\Paquete;
@@ -246,9 +247,9 @@ class PaquetesController extends Controller
 
     public function create()
     {
-        $user = Auth::user();        
-
-        
+        if (!Auth::user()->can('is-admin')) {
+            Redirect::to('/')->send();
+        }
         
         return view('admin.packages.create')->with('paquete',null);
         //return view('admin.addresses.create');
@@ -258,6 +259,11 @@ class PaquetesController extends Controller
     {     
         //Este es el administrador   
         $user = Auth::user();        
+
+        if (!$user->can('is-admin')) {
+            Redirect::to('/')->send();
+        }
+        
 
         $paquete = new Paquete($request -> all());
         $asignarA = Usuario::where('id', $paquete->usuario_id)->first();                    

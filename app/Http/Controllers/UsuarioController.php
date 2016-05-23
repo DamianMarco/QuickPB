@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Usuario;
@@ -17,12 +18,6 @@ class UsuarioController extends Controller
 
     public function __construct()
     {
-        //Protege el controller
-        //$this->middleware('auth');
-        //expone rutas sin proteccion
-       // $this->middleware('auth', ['except' => ['create','store']]);
-        //$this->middleware('auth', ['except' => ['salir', 'getLogout']]);
-       
  
     }
  
@@ -134,21 +129,7 @@ class UsuarioController extends Controller
 
     public function view()
     {           
-
         $user = Auth::user();
-
-        //$usuarios = Usuario::all();        
-        
-        /*$jsonData='{';        
-        $jsonData=$jsonData.'"current" : 1,';
-        $jsonData=$jsonData.'"rowCount" : 10,';
-        $jsonData=$jsonData.'"rows" : '.$usuarios->toJson().',';
-        $jsonData=$jsonData.'"total" :'.$usuarios->count().'}';*/
-        
-        //dd($jsonData);
-
-        //dd($usuarios->toJson());
-
         return view('admin.users.view');
     }
 
@@ -196,6 +177,52 @@ class UsuarioController extends Controller
         );
      
         return json_encode($data);
+    }
+
+    public function userList()
+    {
+        if (!Auth::user()->can('is-admin')) {
+            Redirect::to('/')->send();
+        }
+             
+       $users= Usuario::orderBy('updated_at','DESC')->get();
+
+        $data=array(
+        'users'=>$users
+        );
+
+        return view('admin.users.userlist')->with($data);;
+    }
+
+    public function changeActive(Request $request)
+     {
+       if($request->ajax()) {
+          $data = $request->all();
+          $id = $data["id_user"];
+          $enableuser = $data["enable"];
+          $user = Usuario::where("id", $id)->first();
+          $user->estatus = $enableuser == "true" ? "activo":"inactivo";
+          $user->save();
+          return response()->json([
+              "success"=>"true", "mensaje"=>'Cambios realizados correctamente.'
+          ], 200);
+
+          }        
+    }
+
+    public function changeTypeUser(Request $request)
+     {
+       if($request->ajax()) {
+              $data = $request->all();
+              $id = $data["id_user"];
+              $enableuser = $data["type"];
+              $user = Usuario::where("id", $id)->first();
+              $user->rol = $enableuser  == "true"  ? "admin":"cliente";
+              $user->save();
+              return response()->json([
+                  "success"=>"true", "mensaje"=>'Cambios realizados correctamente'
+              ], 200);
+          } 
     }
    
 }

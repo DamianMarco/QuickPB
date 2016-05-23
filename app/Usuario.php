@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Usuario extends Authenticatable
+class Usuario extends Authenticatable implements AuthorizableContract
 {
     /**
      * The attributes that are mass assignable.
@@ -36,4 +37,9 @@ class Usuario extends Authenticatable
     {
         return $this->hasMany('App\Paquete');
     }    
+
+    public function isAdmin()
+    {
+        return $this->rol === "admin";
+    }
 }

@@ -53,7 +53,7 @@
 					class="danger"
 				@elseif ($pack->estatus == "enCurso" || $pack->estatus == "enTuCiudad" || $pack->estatus == "enEntrega")
 					class="warning"
-				@elseif ($pack->enviarPaquete == "Aceptada")
+				@elseif ($pack->enviarPaquete == "Aceptada" || $pack->estatus == "entregado")
 					class="success"
 				@endif
 			> 

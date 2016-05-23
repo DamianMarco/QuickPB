@@ -42,6 +42,7 @@
   	<ul class="nav navbar-nav navbar-right">
   	@if (Auth::user())
       	@if (Auth::user()->rol == "admin")
+           <li><a href="{{ route('users.userlist') }}"><i class="fa fa-users"></i> Usuarios</a></li>
   				 <li class="dropdown {{ Request::segment(1) === 'packages' ? 'active' : null }}">
   	          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" ><i class="fa fa-archive" aria-hidden="true"></i> Administrar Paquetes <span class="caret"></span></a>
   			          <ul class="dropdown-menu">
@@ -53,7 +54,7 @@
 
       	@else
    			<li class="{{ Request::segment(1) === 'packages' ? 'active' : null }}"><a href="{{ route('packages.packagesview') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
-  		    <li class="{{ Request::segment(1) === 'pays' ? 'active' : null }}"><a href="{{ url('pays/pagos') }}"><i class="fa fa-archive"></i> Mis Pagos</a></li>
+  		    <!--li class="{{ Request::segment(1) === 'pays' ? 'active' : null }}"><a href="{{ url('pays/pagos') }}"><i class="fa fa-archive"></i> Mis Pagos</a></li-->
 
           	<li class="dropdown {{ Request::segment(1) === 'addresses' ? 'active' : null }}">
             		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-street-view"></i> {{ Auth::user()->nombreUsuario }}  <span class="caret"></span></a>

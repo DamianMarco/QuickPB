@@ -83,10 +83,27 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
-    Route::get('users/list', [     
+    Route::get('users/userlist', [     
         'middleware' => 'auth',   
-        'uses' => 'UsuarioController@apiList',
-        'as' => 'users.list'
+        'uses' => 'UsuarioController@userList',
+        'as' => 'users.userlist'
+    ]);
+
+    Route::post('users/changeActive', [
+        'middleware' => 'cors',
+        'uses' => 'UsuarioController@changeActive',
+        'as' => 'users.changeActive'
+    ]);
+    
+    Route::post('users/changeTypeUser', [
+        'middleware' => 'cors',
+        'uses' => 'UsuarioController@changeTypeUser',
+        'as' => 'users.changeTypeUser'
+    ]);
+    Route::get('users/view', [     
+        'middleware' => 'auth',   
+        'uses' => 'UsuarioController@view',
+        'as' => 'users.view'
     ]);
 
     Route::get('users/view', [     
