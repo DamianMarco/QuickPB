@@ -83,6 +83,12 @@ Route::group(['middleware' => ['web']], function () {
         return view('welcome');
     });
 
+    Route::get('users/list', [     
+        'middleware' => 'auth',   
+        'uses' => 'UsuarioController@apiList',
+        'as' => 'users.list'
+    ]);  
+
     Route::get('users/userlist', [     
         'middleware' => 'auth',   
         'uses' => 'UsuarioController@userList',
