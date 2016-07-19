@@ -5,10 +5,10 @@
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <div class="fit-vids-style">&shy;
-<style>               
+<style>
 	.fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }
 
-   .fluid-width-video-wrapper iframe,        .fluid-width-video-wrapper object,        .fluid-width-video-wrapper embed {           position: absolute;                       top: 0;                                   left: 0;                                  width: 100%;                              height: 100%;                          }                                       
+   .fluid-width-video-wrapper iframe,        .fluid-width-video-wrapper object,        .fluid-width-video-wrapper embed {           position: absolute;                       top: 0;                                   left: 0;                                  width: 100%;                              height: 100%;                          }
 </style>
 </div>
 	<meta charset="UTF-8">
@@ -34,7 +34,7 @@
 			padding: 0 !important;
 		}
 	</style>
-	
+
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/lightgallery/css/lightgallery.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/wpthemes/css/woocommerce/woocommerce-layout.css?ver=2.4.12')}}">
@@ -57,12 +57,12 @@
 	        border: none;
 	        box-shadow: 0 1px 7px rgba(0,0,0,0.6);
 	        -o-transform: scale(1,1); -ms-transform: scale(1,1); -moz-transform: scale(1,1); -webkit-transform: scale(1,1); transform: scale(1,1); -o-transition: all 0.2s ease-in-out; -ms-transition: all 0.2s ease-in-out; -moz-transition: all 0.2s ease-in-out; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;
-	    } 
+	    }
 	    a.fancybox:hover img {
 	        position: relative; z-index: 999; -o-transform: scale(1.03,1.03); -ms-transform: scale(1.03,1.03); -moz-transform: scale(1.03,1.03); -webkit-transform: scale(1.03,1.03); transform: scale(1.03,1.03);
 	    }
 	</style>
-	
+
 	<script type="text/javascript" src="{{asset('vendor/jquery/jquery-1.11.3.js')}}"></script>
 	<script type="text/javascript" src="{{asset('vendor/jquery/jquery-migrate.min.js?ver=1.2.1')}}"></script>
 	<script type="text/javascript" src="{{asset('css/wpthemes/js/discover/modernizr.js')}}"></script>
@@ -70,39 +70,39 @@
 	<script type="text/javascript" src="{{asset('css/lightgallery/js/lightgallery.min.js')}}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 	<style>
-			a{ 
-				color: #fd7800; 
+			a{
+				color: #fd7800;
 			}
-			.widget-container-primary ul li a{ 
-				color: #000000; 
+			.widget-container-primary ul li a{
+				color: #000000;
 			}
-			#footer-widget .widget-container ul li a{ 
-				color: #fd7800; 
+			#footer-widget .widget-container ul li a{
+				color: #fd7800;
 			}
-			body{ 
-				border-top-color: #fd7800; 
+			body{
+				border-top-color: #fd7800;
 			}
-			.meta-data a{ 
-				color: #fd7800; 
+			.meta-data a{
+				color: #fd7800;
 			}
-			.button{ 
-				background: #fd7800; 
+			.button{
+				background: #fd7800;
 			}
-			.button:hover{ 
-				background-color: #ce6200; 
+			.button:hover{
+				background-color: #ce6200;
 			}
-			.button{ 
-				border-color: #ce6200; 
+			.button{
+				border-color: #ce6200;
 			}
 			#nav li:hover, #nav li.sfHover, #nav li:hover > a,
-			#nav a:focus, #nav a:hover, #nav a:active, #nav li li a{ 
-				background: #444444; 
+			#nav a:focus, #nav a:hover, #nav a:active, #nav li li a{
+				background: #444444;
 			}
 				#nav li ul li:hover, #nav li ul li.sfHover,
 				#nav li ul li a:focus, #nav li ul li a:hover, #nav li ul li a:active, #nav li.current_page_item > a,
 				#nav li.current-menu-item > a,
-				#nav li.current-cat > a{ 
-				background: #fd7800; 
+				#nav li.current-cat > a{
+				background: #fd7800;
 			}
 			.spaceMargen{
 				margin-left: 10px;
@@ -167,11 +167,11 @@ var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax
 
 <script type="text/javascript" src="{{asset('vendor/bootstrap3_3_6/js/bootstrap.js')}}"></script>
 <script type="text/javascript" src="{{asset('vendor/jquery/jquery.bootgrid.min.js')}}"></script>
-
+<script type="text/javascript" src="{{asset('js/contrato.js')}}"></script>
 <script type="text/javascript">
-    
+
         jQuery("#flash-overlay-modal").modal();
-    
+
 </script>
 </script>
 <script type="text/javascript">var virtualPath= "{{ asset('/index.php') }}";//'http://localhost:81/quickpb/public/index.php';</script>
