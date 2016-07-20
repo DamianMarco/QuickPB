@@ -83,7 +83,7 @@ var controlEnter;
                 controlEnter=this;
                 jQuery(this).bootstrapSwitch('state', !state, true);
                 var switchControl = this;
-                var mensaje = !state?"Activara al usuario desea continuar?":"Deshactivara al usuario desea continuar?";
+                var mensaje = state?"¿ Desea Activar al usuario ?":"¿ Desea desactivara al usuario ?";
                 bootbox.confirm(mensaje, function(result) {
                   if(result)
                   {
@@ -131,7 +131,7 @@ var controlEnter;
                 controlEnter=this;
                 jQuery(this).bootstrapSwitch('state', !state, true);
                 var switchControl = this;
-                var mensaje = !state?"Cambiaras el usuario a Administrador?":"Cambiar usuario a cliente?";
+                var mensaje = !state?"¿ Cambiar el usuario a Administrador ?":"¿ Cambiar usuario a Cliente ?";
                 bootbox.confirm(mensaje, function(result) {
                   if(result)
                   {

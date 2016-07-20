@@ -31,8 +31,8 @@ class PaquetesController extends Controller
      {
      	//$pacs = DB::table('paquetes')->where('usuario_id', $id)->get(); //App\Paquetes::where('usuario_id', $id)->get();
         $user = Auth::user();
-
-        if($user->tipo == 'admin')
+        
+        if($user->rol == 'admin')
     		    $pacs = Paquete::orderBy('updated_at','DESC')->paginate(5);
         else
             $pacs = Paquete::where('usuario_id', $user->id)->orderBy('updated_at','DESC')->paginate(5);
@@ -135,19 +135,19 @@ class PaquetesController extends Controller
           if(is_null($user->direccion))
           {
              return response()->json([
-                          "success"=>"false", "mensaje"=>'Debe de dar de alta su direccion de <strong>Facturaci&oacute;n</strong> como la direcci&oacute;n donde <strong>reciba su paquete</strong>.'
+                          "success"=>"false", "mensaje"=>'Debe registrar su direcci&oacute;n de <strong>Env&iacute;o</strong> que ser&aacute; donde <strong>reciba su paquete</strong>.'
                       ], 200);
           }
           else
           {
-            $dirFactura = Direccion::where('usuario_id',$user->id)->where('tipo','facturacion')->first();
+            /*$dirFactura = Direccion::where('usuario_id',$user->id)->where('tipo','facturacion')->first();*/
             $dircasa = Direccion::where('usuario_id',$user->id)->where('tipo','envio')->first();
 
-              if(is_null($dirFactura) || is_null($dircasa))
+              if(is_null($dircasa))
               {
                  return response()->json([
-                          "success"=>"false", "mensaje"=>'Debe de dar de alta su direccion de <strong>Facturaci&oacute;n</strong> como la direcci&oacute;n donde <strong>reciba su paquete</strong>.'
-                      ], 200);  
+                          "success"=>"false", "mensaje"=>'Debe registrar su direcci&oacute;n de <strong>Env&iacute;o</strong> que ser&aacute; donde <strong>reciba su paquete</strong>.'
+                      ], 200);
               }
           }
         
@@ -166,7 +166,7 @@ class PaquetesController extends Controller
           if ($validator->fails())
           {
              return response()->json([
-                          "success"=>"false", "mensaje"=>'Debe de seleccionar un archivo de tipo imagen que cumpla con lo siguiente: archivo de tipo jpeg/gif/png/bmp con un peso m&aacute;ximo de 10000kb'
+                          "success"=>"false", "mensaje"=>'La factura imagen/foto deber&aacute; cumplir con: <br> Formato (jpeg/gif/png/bmp) <br> Peso m&aacute;ximo de 10000kb'
                       ], 200);
           }
           else
@@ -229,7 +229,7 @@ class PaquetesController extends Controller
 
 
               return response()->json([
-                          "success"=>"true", "mensaje"=>'Se ha enviado la imagen seleccionada correctamente, la factura sera revisada y posteriormente recibiras un correo con mas informaci&oacute;n', "filename" =>  asset(''). '/images_bills/' .$name
+                          "success"=>"true", "mensaje"=>'Se ha enviado la factura correctamente, será revisada para posteriormente enviarle un correo con la cotización de la importaci&oacute;n.', "filename" =>  asset(''). '/images_bills/' .$name
                       ], 200);
           }
         }

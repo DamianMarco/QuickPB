@@ -43,7 +43,7 @@
 
 	<h2>Iniciar Sesión</h2>
 
-			{!! Form::open(['route'=> 'users.authenticate', 'method' => 'POST', 'class' => 'login']) !!}
+			{!! Form::open(['route'=> 'users.authenticate','id' => 'formLogin', 'method' => 'POST', 'class' => 'login']) !!}
 
 
 				<p class="form-row form-row-wide">
@@ -77,7 +77,7 @@
 
 <h2>Registrate</h2>
 
-			{!! Form::open(['route'=> 'users.store', 'method' => 'POST', 'class' => 'register']) !!}
+			{!! Form::open(['route'=> 'users.store','id' => 'formRegister', 'method' => 'POST', 'class' => 'register']) !!}
 
 				<p class="form-row form-row-wide">
 
@@ -132,7 +132,7 @@
       </div>
       <div class="modal-footer">
         <button id="btnCancelar" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button id='btnAceptar' type="button" class="btn btn-primary">Aceptar</button>
+        <button id='btnAceptar' type="button" class="btn btn-primary">Acepto términos y condiciones</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -143,7 +143,7 @@
 @section('misScripts')
 
 <script type="text/javascript">
- jQuery('form').submit(function (e) {
+ jQuery('#formRegister').submit(function (e) {
 	 jQuery("#btnAceptar").prop('disabled','true');
    jQuery('#modal').modal();
    jQuery('#Terminos_contenido').html(contrato);
@@ -159,8 +159,8 @@ jQuery("#Terminos_contenido").scroll(function(){
 
 });
 jQuery("#btnAceptar").click(function(){
-	jQuery("form").off('submit');
-	jQuery("form").submit();
+	jQuery("#formRegister").off('submit');
+	jQuery("#formRegister").submit();
 });
 jQuery("#btnCancelar").click(function(){
 	jQuery('#Terminos_contenido').scrollTop(0);

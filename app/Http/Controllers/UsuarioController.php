@@ -88,6 +88,7 @@ class UsuarioController extends Controller
     {
         $user = new Usuario($request -> all());
         $user->password = bcrypt($user->password);  
+        $user->estatus = 'activo';
 
         $user -> save();
         
@@ -124,7 +125,7 @@ class UsuarioController extends Controller
         $user = fill($request->all());
             
         $user -> save();
-        Flash::overlay('!Datos actualizado correctamente! ' , 'Actualizo sus datos.');
+        Flash::overlay('! Datos actualizados correctamente ! ' , 'Actualizo sus datos.');
         return redirect()->route('users.create');
     }
 

@@ -31,7 +31,7 @@
 				@endif
 				<th>Socio</th> 
 				<th>Ubicaci&oacute;n</th> 
-				<th>Folio</th> 
+				<th>Gu&iacute;a</th> 
 				<th>Proveedor</th> 
 				<th>Ver Detalle</th>
 				<th>Contenido</th> 
@@ -82,9 +82,9 @@
 			<td>${{$pack->costo}} <span style="color:red;"> ** </span></td>
 			<td>
 			@if(!isset($pack->factura->img_PathFactura))
-				<button type="button" class="btn btn-warning" id="{{ $pack->id. 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset('/images_bills/docnobill.png')}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Factura</button>
+				<button type="button" class="btn btn-warning" id="{{ $pack->id. 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset('/images_bills/docnobill.png')}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Cotizar Importaci&oacute;n</button>
 			@else
-				<button type="button" class="btn btn-warning" id="{{ $pack->id . 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset($pack->factura->img_PathFactura)}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Factura</button>
+				<button type="button" class="btn btn-warning" id="{{ $pack->id . 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset($pack->factura->img_PathFactura)}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Factura enviada</button>
 			@endif
 			</td>
 			@if (Auth::user()->rol == "cliente")
@@ -119,7 +119,7 @@
       <div class="modal-body">
        
  		<div class="form-group"> 
- 			<label for="recipient-name" class="control-label">Folio:</label> 
+ 			<label for="recipient-name" class="control-label">Gu&iacute;a:</label> 
  			<input type="text" class="form-control" id="detalleFolio" readonly="readonly"> 
  		</div> 
 
@@ -164,9 +164,9 @@
         <h4 class="modal-title" id="gridSystemModalLabel">
 
 @if (Auth::user()->rol == "cliente")
-        Quieres recibir tu paquete en casa? sube la imagen de la factura!
+        ¿ Quieres recibir tu paquete en casa ? <br> Pida una cotización enviando una imagen/foto de su factura.
 @else
-	 Imagen que el usuario agrego.
+	 Factura del cliente.
 @endif
         </h4>
       </div>

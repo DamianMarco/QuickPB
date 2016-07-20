@@ -71,7 +71,7 @@
 				@endif		
 			@endif								
 		  		<div class="form-group">
-			    	<label for="folio" class="col-sm-2 control-label">Folio</label>
+			    	<label for="folio" class="col-sm-2 control-label">Gu&iacute;a</label>
 				    <div class="col-sm-10">						    					  
 					   {!! Form::text('folio', null, ['class' => 'form-control', 'placeholder' => 'Folio']) !!}					         
 				    </div>
@@ -127,12 +127,12 @@
 			      <!--input type="text" class="form-control" id="estatus" name="estatus" placeholder="Estatus"-->
 			    </div>
 			  </div>				  
-			  <div class="form-group">
+			  <!--div class="form-group">
 			    <label for="suite" class="col-sm-2 control-label">Suite</label>
 			    <div class="col-sm-10">
 			      {!! Form::text('suite', null, ['class' => 'form-control', 'placeholder' => 'Suite']) !!}        
 			    </div>
-			  </div>
+			  </div-->
 			  <div class="form-group">
 			    <label for="tipoPaquete" class="col-sm-2 control-label">Tipo Paquete</label>
 			    <div class="col-sm-10">
