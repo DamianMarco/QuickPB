@@ -96,12 +96,13 @@ class UsuarioController extends Controller
         $enviado = Mail::send('emails.bienvenido', $data, function($m) use ($data)
         {                   
             //$m->from('altas@quickpobox.com','Nuevo usuario: '.$data['name']);
-            $m->to($data['email'])->cc('damiancp@hotmail.com')->subject('Alta Nuevo Usuario QuickPoBox'); 
+            $m->to($data['email'])->cc('damiancp@hotmail.com')->subject('Registro completo en Quick PO BOX'); 
+            $m->attach('docs/Contrato_QuickPOBOX.pdf');
         });
             
         if ($enviado)
         {            
-            Flash::overlay('¡ Usuario creado correctamente, revise su correo para obtener más información del alta ! ', 'Usuario creado');            
+            Flash::overlay('¡ Bienvenido a Quick PO BOX ! ', 'Usuario creado exitosamente');            
         }
         else
         {

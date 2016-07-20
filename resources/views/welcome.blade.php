@@ -84,7 +84,7 @@
                     <img src="{{ asset('/images/rack1.jpg') }}" alt="">
                     <div class="caption">
                         <h4>Desde USA a México</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>Facilitamos el translado de USA a México.</p>
                         <p>
                             <!--a href="#" class="btn btn-default">Buy Now!</a--><a href="#" class="btn btn-primary">Ver más</a>
                         </p>
@@ -97,7 +97,7 @@
                     <img src="{{ asset('/images/rack2.jpg') }}" alt="">
                     <div class="caption">
                         <h4>Información en línea</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>Podrás rastrear tu paquete de inicio a fin.</p>
                         <p>
                             <!--a href="#" class="btn btn-primary">Buy Now!</a--><a href="#" class="btn btn-primary">Ver más</a>
                         </p>
@@ -109,8 +109,8 @@
                 <div class="thumbnail">
                     <img src="{{ asset('/images/rack3.jpg') }}" alt="">
                     <div class="caption">
-                        <h4>Marcas americanas para tí</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <h4>Marcas de USA para tí</h4>
+                        <p>Marcas de productos de Estados Unidos a tu alcance.</p>
                         <p>
                             <!--a href="#" class="btn btn-primary">Buy Now!</a--><a href="#" class="btn btn-primary">Ver más</a>
                         </p>
@@ -123,7 +123,7 @@
                     <img src="{{ asset('/images/rack4.jpg') }}" alt="">
                     <div class="caption">
                         <h4>Envios a todo México</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>Tu compra en USA puede ser enviada a todo México.</p>
                         <p>
                             <!--a href="#" class="btn btn-primary">Buy Now!</a--><a href="#" class="btn btn-primary">Ver más</a>
                         </p>
