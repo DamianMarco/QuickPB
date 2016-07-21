@@ -59,7 +59,7 @@
           	<li class="dropdown {{ Request::segment(1) === 'addresses' ? 'active' : null }}">
             		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-street-view"></i> {{ Auth::user()->nombreUsuario }}  <span class="caret"></span></a>
   		          <ul class="dropdown-menu">
-  		            	<li class="{{ Request::segment(1) === 'addresses' ? 'active' : null }}"><a href="{{ route('addresses.view') }}"><i class="fa fa-user"></i> Mi Domicilio</a></li>
+  		            	<li class="{{ Request::segment(1) === 'addresses' ? 'active' : null }}"><a href="{{ route('addresses.view') }}"><i class="fa fa-user"></i> Mis Direcciones</a></li>
   		            	<li class="{{ Request::segment(2) === 'packagesview' ? 'active' : null }}"> <a href="{{ route('packages.packagesview') }}"><i class="fa fa-archive"></i> Mis Paquetes</a></li>
   		                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> Cerrar sesión</a></li>
   		          </ul>

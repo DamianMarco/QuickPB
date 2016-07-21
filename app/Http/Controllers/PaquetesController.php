@@ -181,7 +181,7 @@ class PaquetesController extends Controller
               $facturaEnBD = Factura::where('paquete_id', $factura->paquete_id)->first();
             
 
-              $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'pathFile' => public_path() . $factura->img_PathFactura);
+              $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'folio' => $miPaquete->folio, 'pathFile' => public_path() . $factura->img_PathFactura);
 
               if (is_null($facturaEnBD))
               {  
@@ -269,7 +269,7 @@ class PaquetesController extends Controller
         $asignarA = Usuario::where('id', $paquete->usuario_id)->first();                    
         $paquete->save();
 
-        $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones);
+        $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones, 'suite' => $user->id);
 
            Mail::queue('emails.paqueteasignado', $data, function($message) use ($data)
             {                   

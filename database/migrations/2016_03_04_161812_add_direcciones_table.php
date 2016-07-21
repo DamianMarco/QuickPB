@@ -19,7 +19,7 @@ class AddDireccionesTable extends Migration
             $table->foreign('usuario_id')->references('id')->on('usuarios');
             
             //$table->integer('usuario_id');            
-            $table->string('nombre', 100);
+            $table->string('nombre', 120);
             $table->string('apellidoPaterno', 50);
             $table->string('apellidoMaterno', 50);
             $table->string('telefono', 60);

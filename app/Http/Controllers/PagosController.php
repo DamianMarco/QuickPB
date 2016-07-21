@@ -14,6 +14,7 @@ use App\Paquete;
 use App\Pago;
 use Conekta;
 use Conekta_Charge;
+use Mail;
 
 class PagosController extends Controller
 {
@@ -56,18 +57,18 @@ class PagosController extends Controller
        
         if(is_null($billing_address))
         {
-
+          //dd($request->all());  
           Flash::overlay("Es necesario la dirección de facturacion", 'Error',2);
-            return view('admin.pays.pagos');
+            return view('admin.pays.pagos')->with('paquete',$miPaquete);
         }
 
         if(is_null($miPaquete))
         {
 
           Flash::overlay("No se encontro informacion del paquete a pagar", 'Error',2);
-            return view('admin.pays.pagos');
+            return view('admin.pays.pagos')->with('paquete',$miPaquete);
         }        
-
+        $apagar = $miPaquete->costo * 100; 
         //Clave privada
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
@@ -76,7 +77,7 @@ class PagosController extends Controller
             $charge = Conekta_Charge::create(array(
                   'description'=> $miPaquete->contenido,
                   'reference_id'=> $miPaquete->id,
-                  'amount'=> $miPaquete->costo,
+                  'amount'=> $apagar,
                   'currency'=>'MXN',
                   'card'=> 'tok_test_visa_4242', // $_POST['conektaTokenId']
                   'details'=> array(
@@ -95,7 +96,7 @@ class PagosController extends Controller
                       array(
                         'name'=> 'COBRO DE PAQUETE',
                         'description'=>  $miPaquete->contenido,
-                        'unit_price'=> $miPaquete->costo,
+                        'unit_price'=> $apagar,
                         'quantity'=> 1,
                         'sku'=> 'cohb_s1',
                         'category'=>  $miPaquete->tipopaquete //'package'
@@ -120,15 +121,14 @@ class PagosController extends Controller
             //echo $charge->status;
         } 
         catch (Conekta_Error $e) 
-        {
+        {          
            dd($e);
-
         	  Flash::overlay($e->getMessage(), 'Error',2);
-         	  return view('admin.pays.pagos');
+         	  return view('admin.pays.pagos')->with('paquete',$miPaquete);
         	 
           // return View::make('pagos',array('message'=>$e->getMessage()));
         } 
-
+        
         $metodoPago = $charge->payment_method;
 
           $miPaquete->enviarPaquete ="Aceptada";
@@ -136,7 +136,7 @@ class PagosController extends Controller
         
          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'contenido' => $miPaquete->contenido, 'costo' => $miPaquete->costo, 'authcode' => $metodoPago->auth_code);
 
-         Mail::queue('emails.paquetecotizado', $data, function($message) use ($data)
+         Mail::queue('emails.pagorealizado', $data, function($message) use ($data)
           {                   
             //psw:f4cturas_2020
             $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Pagado!!');
@@ -163,7 +163,7 @@ class PagosController extends Controller
 
         if($charge->status="paid")
           Flash::overlay("El pago fue procesado con exito. Por favor verifique con su banco.");
-        return view('admin.pays.pagos');
+        return view('admin.pays.pagos')->with('paquete',$miPaquete);
         //return View::make('pagos',array('message'=>$charge->status));
         
     }
