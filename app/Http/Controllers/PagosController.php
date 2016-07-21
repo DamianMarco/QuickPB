@@ -121,12 +121,9 @@ class PagosController extends Controller
             //echo $charge->status;
         } 
         catch (Conekta_Error $e) 
-        {          
-           dd($e);
-        	  Flash::overlay($e->getMessage(), 'Error',2);
-         	  return view('admin.pays.pagos')->with('paquete',$miPaquete);
-        	 
-          // return View::make('pagos',array('message'=>$e->getMessage()));
+        {                     
+        	  Flash::overlay($e->message_to_purchaser, 'Problema con el pago',2);
+         	  return view('admin.pays.pagos')->with('paquete',$miPaquete);                  
         } 
         
         $metodoPago = $charge->payment_method;
