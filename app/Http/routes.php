@@ -146,6 +146,12 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'PaquetesController@storeimage',
         'as' => 'packages.storeimage'
     ]);
+
+        Route::post('packages/removecotizacion', [
+        'middleware' => 'cors',
+        'uses' => 'PaquetesController@removecotizacion',
+        'as' => 'packages.removecotizacion'
+    ]);
 /*
     Route::get('packages/storeimage', function() {
       return View::make('admin.packages.packagesview');

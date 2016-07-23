@@ -68,7 +68,8 @@ class PagosController extends Controller
             return view('admin.pays.pagos');
         }        
 
-        //Clave privada
+        $costopack = ($pack->costoEnvio != 0) ?  $costopack = $pack->costoEnvio : $pack->costo;
+
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
         try 
@@ -76,7 +77,7 @@ class PagosController extends Controller
             $charge = Conekta_Charge::create(array(
                   'description'=> $miPaquete->contenido,
                   'reference_id'=> $miPaquete->id,
-                  'amount'=> $miPaquete->costo,
+                  'amount'=> $costopack,
                   'currency'=>'MXN',
                   'card'=> 'tok_test_visa_4242', // $_POST['conektaTokenId']
                   'details'=> array(
@@ -95,7 +96,7 @@ class PagosController extends Controller
                       array(
                         'name'=> 'COBRO DE PAQUETE',
                         'description'=>  $miPaquete->contenido,
-                        'unit_price'=> $miPaquete->costo,
+                        'unit_price'=>  $costopack,
                         'quantity'=> 1,
                         'sku'=> 'cohb_s1',
                         'category'=>  $miPaquete->tipopaquete //'package'

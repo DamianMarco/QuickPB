@@ -113,6 +113,12 @@
 			    </div>			    
 			  </div>
 			  <div class="form-group">
+			    <label for="costoEnvio" class="col-sm-2 control-label">Costo por Env&iacute;o</label>
+			    <div class="col-sm-10">
+			      {!! Form::text('costoEnvio', null, ['class' => 'form-control', 'placeholder' => 'Al cotizar recuerda sumar el costo de recepci&oacute;n']) !!}        
+			    </div>			    
+			  </div>
+			  <div class="form-group">
 			    <label for="estatus" class="col-sm-2 control-label">Estatus</label>
 			    <div class="col-sm-10">
 				    <!--select class="form-control" id="estatus" name="estatus" placeholder="Estatus">

@@ -41,7 +41,13 @@
                Costo del env&iacute;o: 
             </th>
             <th>
-              <h5> $ {{number_format($paquete->costo, 2, '.', ',')}} </h5>
+              <h5>
+              @if ($paquete->costoEnvio != 0)
+               $ {{number_format($paquete->costoEnvio, 2, '.', ',')}} 
+              @else
+                $ {{number_format($paquete->costo, 2, '.', ',')}} 
+              @endif
+              </h5>
             </th>
           </tr>
         </table>
