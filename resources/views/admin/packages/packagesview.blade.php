@@ -10,6 +10,13 @@
   <div class="panel-body">
     <div class="alert" role="alert" >
 
+<!--div  class="pull-left"-->
+<h3>Tu nueva direcci&oacute;n en USA es:</h3>
+    <h5>8682 San Gabriel <br/> 
+        Laredo, Texas, USA 78041 <br />       
+        Suite {{Auth::user()->id}} <br /> <br />
+	</h5>
+<!--/div-->
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
   		<span>Articulos con un peso de mas de 5 Kilos o peso volumétrico llevan un cargo extra, pregunta por nuestros costos de sobrepeso.</span>
 <br/><br/>

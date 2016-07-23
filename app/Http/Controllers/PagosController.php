@@ -69,7 +69,7 @@ class PagosController extends Controller
         }        
 
         $costopack = ($pack->costoEnvio != 0) ?  $costopack = $pack->costoEnvio : $pack->costo;
-
+        $costopack = number_format($costopack, 2, '.', ',');
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
         try 
