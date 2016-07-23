@@ -24,9 +24,9 @@ class DireccionRequest extends Request
     public function rules()
     {
         return [
-            'nombre'=>'max:50|required',
-            'apellidoPaterno'=>'max:50|required',
-            'apellidoMaterno'=>'max:50|required',
+            'nombre'=>'max:120|required',
+            'apellidoPaterno'=>'max:50',
+            'apellidoMaterno'=>'max:50',
             'calle'=>'max:60|required',            
             'telefono'=>'max:60|required',            
             'numero'=>'required',            

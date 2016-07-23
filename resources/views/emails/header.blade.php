@@ -180,7 +180,10 @@ ol li {
 <div style="background-color: #fd7800; width: 100%; height: 4px; margin: 0px:">   
   </div>
   
-  <div id="logo2"><a href="http://www.quickpobox.com/" title="QuickPOBox"><img src="http://www.quickpobox.com/images/logoQPOBox.png" width="120" height="80" /></a>
+  <div id="logo2">
+    <a href="http://www.quickpobox.com/" title="QuickPOBox">
+      <img src="http://www.quickpobox.com/images/logo_emails.png" border="0" width="128" height="38" />
+    </a>
   </div><!--logo end-->
 
 @yield('content')

@@ -2,50 +2,49 @@
 @extends('emails.header')
 
 @section('content')
-<table class="body-wrap" bgcolor="#f6f6f6">
-  <tr>
-    <td></td>
-    <td class="container" bgcolor="#FFFFFF">
-
-      <!-- content -->
-      <div class="content">
-      <h1>Envio de facturas</h1>
-      <table>
-        <tr>
-          <th colspan="2">
-             Datos del usuario... 
-          </th>
-        </tr>
-        <tr>
-          <th>
-             Usuario: 
-          </th>
-          <td>
-              {{$name}}
-          </td>
-        </tr>
-        <tr>
-          <th>
-             Suite: 
-          </th>
-          <td>
-              {{$idUsuario}}
-          </td>
-        </tr>
-        <tr>
-          <th>
-             tipo paquete: 
-          </th>
-          <td>
-              {{$tipoPaquete}}
-          </td>
-        </tr>
-      </table>
-      </div>
-      <!-- /content -->
-      
-    </td>
-    <td></td>
-  </tr>
-</table>
+<br/>   
+<div class="contenido">
+  <h2>Cotizar importación</h2>   
+  <p>
+        <br />
+        Solicitud de cliente, <br />
+        <h3>QUICK PO BOX ha recibdo una factura para cotizar importación</h3>
+        <br />        
+        Hemos recibido una solicitud para realizar la cotización por la importación de un paquete:
+        <br/>        
+        <br />
+        <b>DATOS DEL PAQUETE</b> <br />        
+        <br />
+  </p>
+  <table>
+    <tr>
+      <th align="left">Usuario cliente: </th>
+      <td align="left">{{$name}} </td>
+    </tr>
+    <tr>
+      <th align="left">Suite: </th>
+      <td align="left">{{$idUsuario}} </td>
+    </tr>
+    <tr>
+      <th align="left">Correo: </th>
+      <td align="left">{{$correoUsuario}} </td>
+    </tr>
+    <tr>
+      <th align="left">Gu&iacute;a: </th>
+      <td align="left">{{$folio}} </td>
+    </tr>    
+  </table>
+  <br /><br />
+  <p>  
+    <br />
+    Para realizar la cotización del paquete ingrese a <a href="www.quickpobox.com" target="_blank">QUICK PO BOX</a>, consulte los paquetes con solicitud de cotización, seleccione el paquete a cotizar y modifiquelo para enviar la cotización al cliente.
+    <br/>            
+  </p>
+  <p>
+                                                Somos,<br>
+                                                QUICK PO BOX<br>
+                                                <a href="www.quickpobox.com" target="_blank">www.quickpobox.com</a>
+    <br />
+  </p>
+</div>
 @endsection

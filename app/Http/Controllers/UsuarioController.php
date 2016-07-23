@@ -86,13 +86,15 @@ class UsuarioController extends Controller
 
     public function store(UsuarioRequest $request)
     {
+                
         $user = new Usuario($request -> all());
+        $password = $user->password;
         $user->password = bcrypt($user->password);  
         $user->estatus = 'activo';
 
         $user -> save();
         
-        $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email);
+        $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email, 'password' => $password, 'suite' => $user->id);
 
         $enviado = Mail::send('emails.bienvenido', $data, function($m) use ($data)
         {                   
