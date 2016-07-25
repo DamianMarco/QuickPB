@@ -185,11 +185,6 @@ var controlEnter;
     function mysuccess(info) {
         if(info.success === 'true'){
             Mensaje("Éxito", info.mensaje);
-            jQuery("#facturaimg").attr("src", info.filename);
-            jQuery("#afacturaimg").attr("href", info.filename)
-            valIdPac = jQuery("#paquete_id").val();
-            jQuery("#" + valIdPac + "tr").addClass("info");
-            jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
           }
        else
             MessageWarning("Aviso", info.mensaje);

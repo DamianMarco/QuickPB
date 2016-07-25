@@ -47,7 +47,7 @@ class PaquetesController extends Controller
         return view('admin.packages.packagesview')->with('packages', $pacs);
      }
 
-     public function view()
+    public function view()
     {            
 
         $user = Auth::user();
@@ -111,9 +111,38 @@ class PaquetesController extends Controller
         return json_encode($data);
      }
 
+     public function removecotizacion(Request $request)
+     {
+        if($request->ajax()) {
+
+          $data = $request->all();
+          $paquete_id = $data['paquete_id'];  
+                
+          $miPaquete = Paquete::where('id', $paquete_id)->first();
+
+          $miPaquete->enviarPaquete = "enEspera";
+          $miPaquete->costoEnvio = 0;
+          $miPaquete->save();
+
+          $facturaEnBD = Factura::where('paquete_id', $paquete_id)->first();
+
+           if(File::exists(public_path() . $facturaEnBD ->img_PathFactura))
+               File::delete(public_path() . $facturaEnBD ->img_PathFactura );
+
+          $facturaEnBD->delete();
+
+            return response()->json([
+                          "success"=>"true", "mensaje"=>'! Se ha rechazado el costo por envi&oacute; de manera exitosa !'
+                      ], 200);
+
+        }
+
+     }
+
      public function storeimage(Request $request)
      {
        if($request->ajax()) {
+        ini_set('max_execution_time', 300);
           $user = Auth::user();
           $factura = new Factura();
           $data = $request->all();
@@ -264,7 +293,6 @@ class PaquetesController extends Controller
             Redirect::to('/')->send();
         }
         
-
         $paquete = new Paquete($request -> all());
         $asignarA = Usuario::where('id', $paquete->usuario_id)->first();                    
         $paquete->save();
@@ -280,7 +308,6 @@ class PaquetesController extends Controller
 
 
         Flash::overlay('El paquete '.$paquete->folio.' ha sido asignado a '.$asignarA->nombreUsuario,'Paquete asignado');
-        
         
         return redirect()->route('packages.create');        
     }
@@ -310,14 +337,14 @@ class PaquetesController extends Controller
 
         $paquete = Paquete::findOrFail($input["id"]);       
 
-        if( $paquete->enviarPaquete =="enCotizacion" &&  $input["costo"] != $paquete->costo )
+        if( $paquete->enviarPaquete =="enCotizacion" &&  $input["costoEnvio"] != $paquete->costoEnvio )
         {
           $paquete->fill($input);
           $paquete->enviarPaquete = "Cotizada";
           $paquete->save();
           $user =  $paquete->Usuario;
 
-          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'costo' => $paquete->costo);
+          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'costo' => $paquete->costoEnvio);
 
            Mail::queue('emails.paquetecotizado', $data, function($message) use ($data)
             {                   
@@ -327,7 +354,7 @@ class PaquetesController extends Controller
             });
 
         }
-        elseif($paquete->estatus !=$input["estatus"])
+        elseif($paquete->estatus != $input["estatus"])
         {
 
           $paquete->fill($input);

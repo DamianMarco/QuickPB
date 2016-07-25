@@ -20,6 +20,7 @@ class Paquete extends Model
 	    'tipoPaquete',
 	    'contenido',
 	    'costo',
+        'costoEnvio',
 	    'observaciones',
 	    'enviarPaquete'
     ];      

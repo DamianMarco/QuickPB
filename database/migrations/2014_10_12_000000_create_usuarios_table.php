@@ -19,7 +19,7 @@ class CreateUsuariosTable extends Migration
             $table->string('email')->unique();
             $table->string('nombreUsuario')->unique();
             $table->string('password');
-            $table->enum('estatus',['activo','inactivo','bloqueado','baja']) -> default('inactivo');
+            $table->enum('estatus',['activo','inactivo','bloqueado','baja']) -> default('activo');
             $table->enum('rol',['cliente','admin','operador']) -> default('cliente');
             $table->rememberToken();
             $table->timestamps();

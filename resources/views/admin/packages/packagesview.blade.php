@@ -10,6 +10,13 @@
   <div class="panel-body">
     <div class="alert" role="alert" >
 
+<!--div  class="pull-left"-->
+<h3>Tu nueva direcci&oacute;n en USA es:</h3>
+    <h5>8682 San Gabriel <br/> 
+        Laredo, Texas, USA 78041 <br />       
+        Suite {{Auth::user()->id}} <br /> <br />
+	</h5>
+<!--/div-->
   		<span><span style="color:red;"> ** </span>Costo calculado en un máximo  de 5 kilos de peso volumétrico.</span><br/>
   		<span>Articulos con un peso de mas de 5 Kilos o peso volumétrico llevan un cargo extra, pregunta por nuestros costos de sobrepeso.</span>
 <br/><br/>
@@ -68,7 +75,7 @@
 			@if (Auth::user()->rol == "admin")
 				<a class="btn btn-default" href="{{ route('packages.edit', $pack->id) }}"><i class="fa fa-eye" aria-hidden="true"></i> Modificar</a>
 			@else			
-				<button type="button" class="btn btn-default" onclick="modalDetalle('{{$pack->folio}}','{{$pack->proveedor}}','{{$pack->contenido}}','{{$pack->costo}}','{{$pack->observaciones}}')"><i class="fa fa-eye" aria-hidden="true"></i> Ver Detalle</button>
+				<button type="button" class="btn btn-default" onclick="modalDetalle('{{$pack->folio}}','{{$pack->proveedor}}','{{$pack->contenido}}','{{$pack->costo}}','{{$pack->costoEnvio}}','{{$pack->observaciones}}')"><i class="fa fa-eye" aria-hidden="true"></i> Ver Detalle</button>
 			@endif
 			</td>
 			<td>{{$pack->contenido}}</td>
@@ -79,7 +86,17 @@
 				{{$pack->observaciones}}
 			@endif
 			</td>
-			<td>${{$pack->costo}} <span style="color:red;"> ** </span></td>
+			<td>
+				@if ($pack->costoEnvio != 0)
+					<center><strong><span id='pricePakage'> ${{$pack->costoEnvio}} </span> </strong>
+					@if (Auth::user()->rol == "cliente")
+						<br><button type="button" class="btn btn-warning btn-xs" id="{{ $pack->id. 'removeC'}}" onclick="removeCotizacion('{{$pack->id}}','{{ $pack->costo }}','{{ $pack->costoEnvio }}')" ><i class="fa fa-times" aria-hidden="true"></i> Rechazar cotizaci&oacute;n</button>
+					@endif	
+					</center>
+				@else
+					<span id='pricePakage'>${{$pack->costo}} <span style="color:red;"> ** </span> </span>
+				@endif
+			</td>
 			<td>
 			@if(!isset($pack->factura->img_PathFactura))
 				<button type="button" class="btn btn-warning" id="{{ $pack->id. 'modalF'}}" onclick="modalFactura('{{$pack->id}}','{{ asset('/images_bills/docnobill.png')}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i> Cotizar Importaci&oacute;n</button>
@@ -89,15 +106,10 @@
 			</td>
 			@if (Auth::user()->rol == "cliente")
 			<td>
-				@if ($pack->enviarPaquete != "Cotizada")
-					<button type="button" class="btn btn-danger" disabled="disabled"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button>
-				@else
 				{!! Form::open(['route'=> 'pays.realizapago',  'method' => 'POST']) !!}
 					{!! Form::hidden('id', $pack->id) !!}
 					<button type="submit" class="btn btn-danger"><i class="fa fa-credit-card" aria-hidden="true"></i> Pagar</button>
-					 {!! Form::close() !!}
-				@endif
-			
+				{!! Form::close() !!}
 			</td>
 			@endif
 			</tr>
@@ -159,12 +171,12 @@
 <div class="modal fade" id="modalFactura" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-info" >
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="gridSystemModalLabel">
 
 @if (Auth::user()->rol == "cliente")
-        ¿ Quieres recibir tu paquete en casa ? <br> Pida una cotización enviando una imagen/foto de su factura.
+        ¿ Quieres recibir tu paquete en casa <i class="fa fa-home" aria-hidden="true"></i>? <br> <h5>Pide una cotización enviando una imagen/foto(<i class="fa fa-picture-o" aria-hidden="true"></i>) de su factura(<i class="fa fa-file-text-o" aria-hidden="true"></i>).</h5>
 @else
 	 Factura del cliente.
 @endif
@@ -212,15 +224,19 @@
 @section('misScripts')
 <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
+ <script type="text/javascript" src="{{asset('vendor/bootbox/bootbox.min.js')}}"></script>
 
 <script type="text/javascript">
 
-	function modalDetalle(Folio,Proveedor,Contenido,Pago,Comentario)
+	function modalDetalle(Folio,Proveedor,Contenido,Pago, PagoEnvio,Comentario)
 	{
 		jQuery("#detalleFolio").val(Folio);
 		jQuery("#detalleProveedor").val(Proveedor);
 		jQuery("#detalleContenido").val(Contenido);
-		jQuery("#detallePagar").val(Pago);
+		if(PagoEnvio > 0)
+			jQuery("#detallePagar").val(PagoEnvio);
+		else
+			jQuery("#detallePagar").val(Pago);
 		jQuery("#detalleComentarios").val(Comentario);
 
 		jQuery('#modalDetalle').modal('show');
@@ -252,11 +268,61 @@
        		MessageWarning("Aviso", info.mensaje);
     }
 
-    
-
     function myerror(info) {
         Error("Error", info.responseText);
     }
+
+function endSuccess(info) {
+        if(info.success === 'true'){
+            Mensaje("Éxito", info.mensaje);
+
+             setInterval(function(){
+				    location.reload(true);
+				  },3000);
+        }
+       else
+            MessageWarning("Aviso", info.mensaje);
+    }
+
+function removeCotizacion(idPaquete, costo, costoEnvio) {
+        
+		var mensaje = "¿ Desea <strong> rechazar </strong> la cotizaci&oacute;n de gastos de envi&oacute; ( <strong>$" + costoEnvio + " </strong>) y solo pagar el gasto de recepci&oacute;n el cual es de <strong>$" + costo +"</strong> ?";
+        bootbox.confirm(mensaje, function(result) {
+              if(result)
+              {
+
+              	var formData = new FormData();
+			    fileInputElement= jQuery('#fileupload');
+			    hide= jQuery("input[name='_token']").val();
+			    hpaquete_id= jQuery("input[name='paquete_id']").val();
+			    formData.append("_token", hide); // number 123456 is immediately converted to a string "123456"
+			    formData.append("paquete_id", idPaquete);
+
+              	jQuery.ajax({
+	                type: "POST",
+	                url: virtualPath + "/packages/removecotizacion",
+	                data: formData,
+	                beforeSend: beforeSendAjax,
+	                cache: false,
+	                processData: false,
+	                dataType: 'json',
+	                contentType: false,
+	                success: function(info){
+						jQuery("#pricePakage").html("$ " + costo + "<span style='color:red;'> ** </span>");
+						jQuery("#" + idPaquete + "removeC").hide();
+	                	jQuery("#" + idPaquete + "tr").removeClass("danger warning info");
+	                	endSuccess(info);
+	                } ,
+	                error: myerror,
+	                complete: function () {
+	                    jQuery('#ajax').modal('hide');
+	                }
+
+	            },"json");
+              }
+         }); 
+    }
+
 
 	jQuery(document).ready(function(){
 
@@ -265,7 +331,7 @@
 		jQuery("#upload-doc").submit(function(e){
 				 e.preventDefault();
 
-				var formData = new FormData();
+			   var formData = new FormData();
 			   fileInputElement= jQuery('#fileupload');
 			   hide= jQuery("input[name='_token']").val();
 			   hpaquete_id= jQuery("input[name='paquete_id']").val();
@@ -293,6 +359,11 @@
 	            },"json");
 			});
 		});
+
+
+    
+
+
 
 </script>
 
