@@ -189,7 +189,7 @@
 	 			
 
 			<div id="lightgallery">
-				<a href="{{ asset('/images_bills/docnobill.png') }}" id="afacturaimg">
+				<a href="{{ asset('/images_bills/docnobill.png') }}" id="afacturaimg" data-download-url="{{ asset('/images_bills/docnobill.png') }}">
 		        	<img id="facturaimg" class="media-object fancybox" src="{{ asset('/images_bills/docnobill.png') }}" alt="Factura" height="100px" width="100px" >
 		      </a>
 			</div>	
@@ -248,32 +248,42 @@
 		//img.setAttribute("width","168"); 
 		//img.setAttribute("height","66"); 
 		//var contenedor=document.getElementById("imagen");
-		alert(rutaImagen);
+		jQuery("#lightgallery").lightGallery();
+
 		if (rutaImagen.indexOf('.pdf')==-1)
 		{
 			jQuery("#facturaimg").attr("src", rutaImagen);
 			jQuery("#afacturaimg").attr("href", rutaImagen);
+			jQuery("#afacturaimg").attr("data-download-url", rutaImagen);
 			
 		}
 		else
 		{
 			jQuery("#facturaimg").attr("src", "{{asset('images/pdficon.png')}}");
 			jQuery("#afacturaimg").attr("href", "{{asset('images/pdficon.png')}}");
+			jQuery("#afacturaimg").attr("data-download-url", rutaImagen);
 		}
         			
-		jQuery("#paquete_id").val(idPaquete);
-		jQuery("#lightgallery").lightGallery();
+		jQuery("#paquete_id").val(idPaquete);		
 		jQuery('#modalFactura').modal('show');
 	}
 
     function mysuccess(info) {
     	if(info.success === 'true'){
            	Mensaje("Éxito", info.mensaje);
-           	jQuery("#facturaimg").attr("src", info.filename);
-			jQuery("#afacturaimg").attr("href", info.filename)
-			valIdPac = jQuery("#paquete_id").val();
+           	valIdPac = jQuery("#paquete_id").val();
+           	if (info.filename.indexOf('.pdf')==-1){
+				jQuery("#facturaimg").attr("src", info.filename);
+				jQuery("#afacturaimg").attr("href", info.filename);
+				jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
+			}
+			else{
+           		jQuery("#facturaimg").attr("src", "{{asset('images/pdficon.png')}}");
+				jQuery("#afacturaimg").attr("href", "{{asset('images/pdficon.png')}}");
+				jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '{{asset('images/pdficon.png')}}')");
+			}			
 			jQuery("#" + valIdPac + "tr").addClass("info");
-           	jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
+           	//jQuery("#" + valIdPac + "modalF").attr("onclick", "modalFactura('" + valIdPac + "', '"+ info.filename +"')");
    		  }
        else
        		MessageWarning("Aviso", info.mensaje);

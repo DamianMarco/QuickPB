@@ -87,7 +87,7 @@ class UsuarioController extends Controller
     public function store(UsuarioRequest $request)
     {
         
-        $administradores = Usuario::where([['rol','=', 'admin'],['estatus','=', 'activo']])->get();
+        $administradores = Usuario::where('rol','=', 'admin')->where('estatus','=', 'activo')->get();
         $emailsAdmin = $administradores->pluck('email')->toArray();
 
         //dd($emailsAdmin);

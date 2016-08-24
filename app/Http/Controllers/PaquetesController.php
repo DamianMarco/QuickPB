@@ -260,7 +260,7 @@ class PaquetesController extends Controller
 
 
               return response()->json([
-                          "success"=>"true", "mensaje"=>'Se ha enviado la factura correctamente, será revisada para posteriormente enviarle un correo con la cotización de la importaci&oacute;n.', "filename" =>  asset(''). '/images_bills/' .$name
+                          "success"=>"true", "mensaje"=>'Se ha enviado la factura correctamente, ser&aacute; revisada para posteriormente enviarle un correo con la cotizaci&oacute;n de la importaci&oacute;n.', "filename" =>  asset(''). '/images_bills/' .$name
                       ], 200);
           }
         }

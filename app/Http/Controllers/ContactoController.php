@@ -64,7 +64,7 @@ class ContactoController extends Controller
 
         if ($errors == '') 
         {   
-            $administradores = Usuario::where('rol','=', 'admin')->orWhere('estatus','=', 'activo')->get();         
+            $administradores = Usuario::where('rol','=', 'admin')->where('estatus','=', 'activo')->get();         
             $data = array( 'name' => $name,  'email' => $email, 'mensaje' => $message, 'emailsAdmin' => $administradores->pluck('email')>toArray());
             //dd($data);        
             $enviado = Mail::send('emails.contacto', $data, function($m) use ($data)
