@@ -176,7 +176,7 @@
         <h4 class="modal-title" id="gridSystemModalLabel">
 
 @if (Auth::user()->rol == "cliente")
-        ¿ Quieres recibir tu paquete en casa <i class="fa fa-home" aria-hidden="true"></i>? <br> <h5>Pide una cotización enviando una imagen/foto(<i class="fa fa-picture-o" aria-hidden="true"></i>) de su factura(<i class="fa fa-file-text-o" aria-hidden="true"></i>).</h5>
+        ¿ Quieres recibir tu paquete en casa <i class="fa fa-home" aria-hidden="true"></i>? <br> <h5>Pide una cotización enviando la factura(<i class="fa fa-file-text-o" aria-hidden="true"></i>) o una imagen/foto(<i class="fa fa-picture-o" aria-hidden="true"></i>) de la misma.</h5>
 @else
 	 Factura del cliente.
 @endif
@@ -248,8 +248,19 @@
 		//img.setAttribute("width","168"); 
 		//img.setAttribute("height","66"); 
 		//var contenedor=document.getElementById("imagen");
-		jQuery("#facturaimg").attr("src", rutaImagen);
-		jQuery("#afacturaimg").attr("href", rutaImagen)
+		alert(rutaImagen);
+		if (rutaImagen.indexOf('.pdf')==-1)
+		{
+			jQuery("#facturaimg").attr("src", rutaImagen);
+			jQuery("#afacturaimg").attr("href", rutaImagen);
+			
+		}
+		else
+		{
+			jQuery("#facturaimg").attr("src", "{{asset('images/pdficon.png')}}");
+			jQuery("#afacturaimg").attr("href", "{{asset('images/pdficon.png')}}");
+		}
+        			
 		jQuery("#paquete_id").val(idPaquete);
 		jQuery("#lightgallery").lightGallery();
 		jQuery('#modalFactura').modal('show');

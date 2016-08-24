@@ -86,7 +86,12 @@ class UsuarioController extends Controller
 
     public function store(UsuarioRequest $request)
     {
-                
+        
+        $administradores = Usuario::where([['rol','=', 'admin'],['estatus','=', 'activo']])->get();
+        $emailsAdmin = $administradores->pluck('email')->toArray();
+
+        //dd($emailsAdmin);
+
         $user = new Usuario($request -> all());
         $password = $user->password;
         $user->password = bcrypt($user->password);  
@@ -94,12 +99,15 @@ class UsuarioController extends Controller
 
         $user -> save();
         
-        $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email, 'password' => $password, 'suite' => $user->id);
+        $data = array( 'name' => $user->nombreUsuario,  'email' => $user->email, 'password' => $password, 'suite' => $user->id, 'copias' => $emailsAdmin);
+
+
 
         $enviado = Mail::send('emails.bienvenido', $data, function($m) use ($data)
         {                   
             //$m->from('altas@quickpobox.com','Nuevo usuario: '.$data['name']);
-            $m->to($data['email'])->cc('damiancp@hotmail.com')->subject('Registro completo en Quick PO BOX'); 
+            //dd($data['copias']);
+            $m->to($data['email'])->cc($data['copias'])->subject('Registro completo en Quick PO BOX'); 
             $m->attach('docs/Contrato_QuickPOBOX.pdf');
         });
             
@@ -150,6 +158,7 @@ class UsuarioController extends Controller
         $skip = ($current > 1) ? $current-1 : 0;
 
         $users = Usuario::where('id','like', '%'.$searchPhrase.'%')->orWhere('email','like', '%'.$searchPhrase.'%')->orWhere('nombreUsuario','like', '%'.$searchPhrase.'%')->take($take)->skip($skip)->get();
+        
 
         if(count($sort)>0)
         {
@@ -163,14 +172,15 @@ class UsuarioController extends Controller
         }
 
         $rows = [];
-        foreach($users as $row) {
-     
-            $rows[] = array(
-                'id' => $row->id,
-                'email' => $row->email,
-                'nombreUsuario' => $row->nombreUsuario,
-                'estatus' => $row->estatus
-            );
+        foreach($users as $row) {  
+            if ($row->rol == "cliente") {
+                $rows[] = array(
+                    'id' => $row->id,
+                    'email' => $row->email,
+                    'nombreUsuario' => $row->nombreUsuario,
+                    'estatus' => $row->estatus
+                );
+            }
         }
      
         $data = array(

@@ -185,7 +185,7 @@ class PaquetesController extends Controller
 
           // Tell the validator that this file should be an image
           $rules = array(
-            'image' => 'mimes:jpeg,jpg,png,gif,bmp|required|max:10000' // max 10000kb
+            'image' => 'mimes:jpeg,jpg,png,gif,bmp,pdf|required|max:50000' // max 10000kb
           );
 
           // Now pass the input and rules into the validator
@@ -195,12 +195,14 @@ class PaquetesController extends Controller
           if ($validator->fails())
           {
              return response()->json([
-                          "success"=>"false", "mensaje"=>'La factura imagen/foto deber&aacute; cumplir con: <br> Formato (jpeg/gif/png/bmp) <br> Peso m&aacute;ximo de 10000kb'
+                          "success"=>"false", "mensaje"=>'La factura o imagen/foto deber&aacute; cumplir con: <br> Formato (jpeg/gif/png/bmp/pdf) <br> Peso m&aacute;ximo de 50000kb'
                       ], 200);
           }
           else
           {
-            
+              $administradores = Usuario::where('rol','=', 'admin')->where('estatus','=', 'activo')->get();
+              $emailsAdmin = $administradores->pluck('email')->toArray();
+
               $name = $user->nombreUsuario . time() . '.' . $file->getClientOriginalExtension();
               $path = public_path() . '/images_bills/';
               //dd($path);
@@ -210,7 +212,7 @@ class PaquetesController extends Controller
               $facturaEnBD = Factura::where('paquete_id', $factura->paquete_id)->first();
             
 
-              $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'folio' => $miPaquete->folio, 'pathFile' => public_path() . $factura->img_PathFactura);
+              $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'folio' => $miPaquete->folio, 'pathFile' => public_path() . $factura->img_PathFactura, 'copias' => $emailsAdmin);
 
               if (is_null($facturaEnBD))
               {  
@@ -220,15 +222,15 @@ class PaquetesController extends Controller
                 $miPaquete->save();
                  Mail::queue('emails.enviofactura', $data, function($message) use ($data)
                  {                   
-                  //psw:f4cturas_2020
-                    $message->to('facturas@quickpobox.com')->subject('Nueva Factura de Paquetes');
+                  //psw:adminqpbox2016
+                    $message->to('facturas@quickpobox.com')->cc($data['copias'])->subject('Nueva Factura de Paquetes');
                     $message->attach($data['pathFile']);
                  });
 
                   Mail::queue('emails.enviofacturatouser', $data, function($message) use ($data)
                  {                   
-                  //psw:f4cturas_2020
-                    $message->to($data['correoUsuario'])->subject('Nueva Factura de Paquetes');
+                  //psw:adminqpbox2016
+                    $message->to($data['correoUsuario'])->cc($data['copias'])->subject('Nueva Factura de Paquetes');
                     $message->attach($data['pathFile']);
                  });
               }
@@ -243,14 +245,14 @@ class PaquetesController extends Controller
 
                 Mail::queue('emails.enviofactura', $data, function($message) use ($data)
                 {                   
-                  //psw:f4cturas_2020
-                    $message->to('facturas@quickpobox.com')->subject('cambio de Factura en Paquetes');
+                  //psw:adminqpbox2016
+                    $message->to('facturas@quickpobox.com')->cc($data['copias'])->subject('cambio de Factura en Paquetes');
                     $message->attach($data['pathFile']);
                 });
                 Mail::queue('emails.enviofacturatouser', $data, function($message) use ($data)
                 {                   
-                  //psw:f4cturas_2020
-                    $message->to($data['correoUsuario'])->subject('has cambiado de Factura de tu paquete');
+                  //psw:adminqpbox2016
+                    $message->to($data['correoUsuario'])->cc($data['copias'])->subject('has cambiado de Factura de tu paquete');
                     $message->attach($data['pathFile']);
                 });
               }

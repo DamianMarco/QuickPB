@@ -63,13 +63,14 @@ class ContactoController extends Controller
         //$body = "De:".$name."\n E-Mail:".$email."\n Mensaje:\n".$message;
 
         if ($errors == '') 
-        {            
-            $data = array( 'name' => $name,  'email' => $email, 'mensaje' => $message);
+        {   
+            $administradores = Usuario::where('rol','=', 'admin')->orWhere('estatus','=', 'activo')->get();         
+            $data = array( 'name' => $name,  'email' => $email, 'mensaje' => $message, 'emailsAdmin' => $administradores->pluck('email')>toArray());
             //dd($data);        
             $enviado = Mail::send('emails.contacto', $data, function($m) use ($data)
             {   
                 $m->from($data['email'],'Contacto: '.$data['name']);
-                $m->to('contacto@quickpobox.com')->cc('damiancp@hotmail.com')->subject('Contacto desde QuickPoBox!'); 
+                $m->to('contacto@quickpobox.com')->cc($data['emailsAdmin'])->subject('Contacto desde QuickPoBox!'); 
             });
             
             if ($enviado)

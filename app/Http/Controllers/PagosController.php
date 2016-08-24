@@ -68,7 +68,7 @@ class PagosController extends Controller
           Flash::overlay("No se encontro informacion del paquete a pagar", 'Error',2);
             return view('admin.pays.pagos')->with('paquete',$miPaquete);
         }        
-        $apagar = $miPaquete->costo * 100; 
+        $apagar = ($miPaquete->costoEnvio != 0 ? $miPaquete->costoEnvio : $miPaquete->costo) * 100; 
         //Clave privada
         Conekta::setApiKey("key_docRukcYyavvENHa2yPmDA");        
 
@@ -128,15 +128,18 @@ class PagosController extends Controller
         
         $metodoPago = $charge->payment_method;
 
-          $miPaquete->enviarPaquete ="Aceptada";
-          $miPaquete->save();
+        $miPaquete->enviarPaquete ="Aceptada";
+        $miPaquete->save();
         
-         $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'contenido' => $miPaquete->contenido, 'costo' => $miPaquete->costo, 'authcode' => $metodoPago->auth_code);
+        $administradores = Usuario::where('rol','=','admin')->where('estatus','=','activo')->get();
+        $emailsAdmin = $administradores->pluck('email')->toArray();
+
+         $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $miPaquete->tipoPaquete, 'contenido' => $miPaquete->contenido, 'costo' => $miPaquete->costo, 'authcode' => $metodoPago->auth_code, 'emailsAdmin' => $emailsAdmin);
 
          Mail::queue('emails.pagorealizado', $data, function($message) use ($data)
           {                   
-            //psw:f4cturas_2020
-            $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Pagado!!');
+            //psw:adminqpbox2016
+            $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->bcc($data['emailsAdmin'])->subject('Paquete Pagado!!');
           });
 
         $metodoPago = $charge->payment_method;
