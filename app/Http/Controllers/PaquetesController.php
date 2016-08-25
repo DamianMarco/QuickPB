@@ -299,13 +299,13 @@ class PaquetesController extends Controller
         $asignarA = Usuario::where('id', $paquete->usuario_id)->first();                    
         $paquete->save();
 
-        $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones, 'suite' => $user->id);
+        $data = array( 'name' => $asignarA->nombreUsuario, 'correoUsuario'=> $asignarA->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones, 'suite' => $asignarA->id);
 
            Mail::queue('emails.paqueteasignado', $data, function($message) use ($data)
             {                   
               //psw:f4cturas_2020
               //$message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!'); 
-              $message->to($data['correoUsuario'])->subject('Paquete Recibido!!');
+              $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Recibido!!');
             });
 
 
@@ -346,13 +346,14 @@ class PaquetesController extends Controller
           $paquete->save();
           $user =  $paquete->Usuario;
 
-          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'costo' => $paquete->costoEnvio);
+
+          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipopaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones, 'suite' => $user->id, 'idUsuario' => $user->id, 'costo' => $paquete->costoEnvio);
 
            Mail::queue('emails.paquetecotizado', $data, function($message) use ($data)
             {                   
               //psw:f4cturas_2020
               //$message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!'); 
-              $message->to($data['correoUsuario'])->subject('Paquete Cotizado!!');
+              $message->to($data['correoUsuario'])->cc('facturas@quickpobox.com')->subject('Paquete Cotizado!!');
             });
 
         }
@@ -364,7 +365,7 @@ class PaquetesController extends Controller
           $paquete->save();
           $user =  $paquete->Usuario;
 
-          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'idUsuario' => $user->id, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => $paquete->estatus);
+          $data = array( 'name' => $user->nombreUsuario, 'correoUsuario'=> $user->email, 'folio' => $paquete->folio, 'proveedor' => $paquete->proveedor, 'alto' => $paquete->alto, 'ancho' => $paquete->ancho, 'largo' => $paquete->largo, 'peso' => $paquete->peso, 'ancho' => $paquete->ancho, 'tipoPaquete' => $paquete->tipoPaquete, 'contenido' => $paquete->contenido, 'ubicacion' => 'En Laredo', 'observaciones' => $paquete->observaciones, 'suite' => $user->id, 'idUsuario' => $user->id, 'costo' => $paquete->costoEnvio);
 
            Mail::queue('emails.paqueteubicacion', $data, function($message) use ($data)
             {                   
