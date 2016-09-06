@@ -16,7 +16,7 @@ class Usuario extends Authenticatable implements AuthorizableContract
 
 
     protected $fillable = [
-         'estatus','rol','estado','email', 'password','nombreUsuario'
+         'estatus','rol','estado','email', 'password','nombreUsuario','telefono','img_Ife'
     ];
 
     /**

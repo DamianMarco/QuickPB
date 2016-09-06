@@ -32,6 +32,8 @@
                 <th>Usuario</th>
                 <th>Estatus</th>
                 <th>Rol</th>
+                <th>Tel&eacute;fono</th>
+                <th>Identificaci&oacute;n</th>
             </tr>
         </thead>
         <tbody> 
@@ -52,6 +54,18 @@
                     checked
                 @endif>
             </td>
+            <td>{{$user->telefono}}</td>
+        @if ($user->rol === "cliente" )
+            <td>
+                @if(!isset($user->img_Ife))
+                   <button type="button" class="btn btn-warning" id="{{ $user->id. 'modalF'}}" onclick="modalIFE('{{$user->id}}','{{ asset('/images_ids/docnobill.png')}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i>Copia Identificaci&oacute;n</button>
+                @else
+                   <button type="button" class="btn btn-warning" id="{{ $user->id . 'modalF'}}" onclick="modalIFE('{{$user->id}}','{{ asset($user->img_Ife)}}')" ><i class="fa fa-file-photo-o" aria-hidden="true"></i>Copia Identificaci&oacute;n</button>
+                @endif
+            </td>
+        @else
+            <td>&nbsp;</td>
+        @endif            
             </tr>
         @endforeach
     </table>
@@ -59,6 +73,33 @@
 	</div>	
 </div>
 
+<!-- MODAL IFE -->
+<div class="modal fade" id="modalIFE" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info" >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel">
+            Identificaci&oacute;n del cliente.
+        </h4>
+      </div>
+      <div class="modal-body">
+        
+            <div class="form-group">             
+                <div id="lightgallery">
+                    <a href="{{ asset('/images_bills/docnobill.png') }}" id="aifeimg" data-download-url="{{ asset('/images_bills/docnobill.png') }}">
+                        <img id="ifeimg" class="media-object fancybox" src="{{ asset('/images_bills/docnobill.png') }}" alt="Factura" height="100px" width="100px" >
+                  </a>
+                </div>             
+            </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- FIN MODAL IFE -->
 
 @endsection
 
@@ -181,6 +222,27 @@ var controlEnter;
     });
 
 
+    function modalIFE(idUsuario, rutaImagen)
+    {        
+        jQuery("#lightgallery").lightGallery();
+
+        if (rutaImagen.indexOf('.pdf')==-1)
+        {
+            jQuery("#ifeimg").attr("src", rutaImagen);
+            jQuery("#aifeimg").attr("href", rutaImagen);
+            jQuery("#aifeimg").attr("data-download-url", rutaImagen);
+            
+        }
+        else
+        {
+            jQuery("#ifeimg").attr("src", "{{asset('images/pdficon.png')}}");
+            jQuery("#aifeimg").attr("href", "{{asset('images/pdficon.png')}}");
+            jQuery("#aifeimg").attr("data-download-url", rutaImagen);
+        }
+                    
+         
+        jQuery('#modalIFE').modal('show');
+    }
 
     function mysuccess(info) {
         if(info.success === 'true'){

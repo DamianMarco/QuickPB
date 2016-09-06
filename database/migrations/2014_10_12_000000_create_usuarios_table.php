@@ -21,6 +21,8 @@ class CreateUsuariosTable extends Migration
             $table->string('password');
             $table->enum('estatus',['activo','inactivo','bloqueado','baja']) -> default('activo');
             $table->enum('rol',['cliente','admin','operador']) -> default('cliente');
+            $table->string('telefono');
+            $table->string('img_Ife',255);
             $table->rememberToken();
             $table->timestamps();
         });

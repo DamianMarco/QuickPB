@@ -12,6 +12,8 @@ use App\Http\Requests\UsuarioRequest;
 use Auth;
 use Hash;
 use Mail;
+use Illuminate\Support\Facades\Validator;
+use File;
 
 class UsuarioController extends Controller
 {
@@ -89,13 +91,46 @@ class UsuarioController extends Controller
         
         $administradores = Usuario::where('rol','=', 'admin')->where('estatus','=', 'activo')->get();
         $emailsAdmin = $administradores->pluck('email')->toArray();
+        $form = $request->all();
 
-        //dd($emailsAdmin);
+        //dd($form);        
+
+        $file = $form['img_Ife'];
+         
+         //dd($file);
+
+        // Build the input for validation
+        $fileArray = array('image' => $file);
+
+          // Tell the validator that this file should be an image
+          $rules = array(
+            'image' => 'mimes:jpeg,jpg,png,gif,bmp,pdf|required|max:50000' // max 10000kb
+          );
+
+          // Now pass the input and rules into the validator
+          $validator = Validator::make($fileArray, $rules);
+
+          // Check to see if validation fails or passes
+          if ($validator->fails())
+          {
+             Flash::error('La copia de su identificaci&oacute;n debe cumplir con: <br> Formato (jpeg/gif/png/bmp/pdf) <br> Peso m&aacute;ximo de 50000kb');
+
+             return redirect()->route('users.create');
+             
+          }
+
+            
 
         $user = new Usuario($request -> all());
         $password = $user->password;
         $user->password = bcrypt($user->password);  
-        $user->estatus = 'activo';
+        $user->estatus = 'activo';   
+
+        $name = $user->nombreUsuario . time() . '.' . $file->getClientOriginalExtension();
+        $path = public_path() . '/images_ids/';
+          //dd($path);
+        $file-> move($path, $name);
+        $user->img_Ife = '/images_ids/' . $name;     
 
         $user -> save();
         

@@ -77,7 +77,7 @@
 
 <h2>Registrate</h2>
 
-			{!! Form::open(['route'=> 'users.store','id' => 'formRegister', 'method' => 'POST', 'class' => 'register']) !!}
+			{!! Form::open(['route'=> 'users.store','id' => 'formRegister', 'method' => 'POST', 'class' => 'register', 'files'=>true]) !!}
 
 				<p class="form-row form-row-wide">
 
@@ -101,9 +101,21 @@
 
 
 			<!-- Spam Trap -->
-			<div style="left: -999em; position: absolute;"><label for="trap">Anti-spam</label><input type="text" name="email_2" id="trap" tabindex="-1"></div>
+			<div style="left: -999em; position: absolute;">
+				<label for="trap">Anti-spam</label>
+				<input type="text" name="email_2" id="trap" tabindex="-1">
+			</div>
+			<p class="form-row form-row-wide">
 
+				{!! htmlspecialchars_decode(Form::label('telefono', 'Tel&eacute;fono <span class="required">*</span>')) !!}
+				{!!form::text('telefono',null, ['class'=>'input-text', 'placeholder' =>'tel&eacute;fono', 'id'=>'telefono', 'required'])!!}
 
+			</p>
+			<p class="form-row form-row-wide">
+				{!! htmlspecialchars_decode(Form::label('img_Ife', 'Copia Identificaci&oacute;n <span class="required">*</span>')) !!}
+				{!! Form::file('img_Ife') !!}
+			</p>
+	
 			<p class="form-row">
 				<button type="submit" class='btn btn-default'><i class="fa fa-pencil"></i> Registrarse</button>
 			</p>

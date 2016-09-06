@@ -75,6 +75,7 @@ return [
     'timezone'             => 'El campo :attribute debe contener una zona válida.',
     'unique'               => 'El elemento :attribute ya está en uso.',
     'url'                  => 'El formato de :attribute no corresponde con el de una URL válida.',
+    'without_spaces'  => 'El campo :attribute no puede contener espacios.',
 
     /*
     |--------------------------------------------------------------------------
